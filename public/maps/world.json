@@ -90,34 +90,6 @@
         },
         {
           "height": 32,
-          "id": 6,
-          "name": "Writer",
-          "properties": [
-            {
-              "name": "id",
-              "type": "string",
-              "value": "writer"
-            },
-            {
-              "name": "name",
-              "type": "string",
-              "value": "Writer"
-            },
-            {
-              "name": "dialogId",
-              "type": "string",
-              "value": "writer"
-            }
-          ],
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 32,
-          "x": 350,
-          "y": 900
-        },
-        {
-          "height": 32,
           "id": 10,
           "name": "Contact",
           "properties": [
@@ -231,44 +203,6 @@
           "width": 64,
           "x": 860,
           "y": 180
-        },
-        {
-          "height": 64,
-          "id": 9,
-          "name": "BlogDoor",
-          "properties": [
-            {
-              "name": "id",
-              "type": "string",
-              "value": "blogDoor"
-            },
-            {
-              "name": "requiredUnlock",
-              "type": "string",
-              "value": "blog"
-            },
-            {
-              "name": "targetX",
-              "type": "int",
-              "value": 860
-            },
-            {
-              "name": "targetY",
-              "type": "int",
-              "value": 820
-            },
-            {
-              "name": "label",
-              "type": "string",
-              "value": "Blog Library"
-            }
-          ],
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 64,
-          "x": 860,
-          "y": 820
         },
         {
           "height": 64,

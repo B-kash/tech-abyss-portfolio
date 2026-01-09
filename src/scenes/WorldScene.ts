@@ -396,7 +396,7 @@ export default class WorldScene extends Phaser.Scene {
     const defaultNPCs: Array<{ id: string; name: string; x: number; y: number }> = [
       { id: 'guide', name: 'Guide', x: playerStartX + 68, y: playerStartY - 32 },        // Slightly right and up from player starting position
       { id: 'engineer', name: 'Engineer', x: mapWidth * 0.88, y: mapHeight * 0.34 },  // Far east, upper area
-      { id: 'writer', name: 'Writer', x: mapWidth * 0.34, y: mapHeight * 0.88 },      // Far south, left area
+      // { id: 'writer', name: 'Writer', x: mapWidth * 0.34, y: mapHeight * 0.88 },      // Far south, left area - commented out
       { id: 'contact', name: 'Contact', x: mapWidth * 0.1, y: mapHeight * 0.63 },  // Far west, mid area
     ];
 
@@ -479,7 +479,7 @@ export default class WorldScene extends Phaser.Scene {
     const defaultDoors: Array<{ id: string; requiredUnlock: string; label: string; x: number; y: number; targetX: number; targetY: number }> = [
       { id: 'aboutDoor', requiredUnlock: 'about', label: 'About House', x: mapWidth * 0.18, y: mapHeight * 0.18, targetX: mapWidth * 0.18, targetY: mapHeight * 0.18 },      // Northwest corner
       { id: 'projectsDoor', requiredUnlock: 'projects', label: 'Projects Lab', x: mapWidth * 0.84, y: mapHeight * 0.18, targetX: mapWidth * 0.84, targetY: mapHeight * 0.18 },  // Northeast corner
-      { id: 'blogDoor', requiredUnlock: 'blog', label: 'Blog Library', x: mapWidth * 0.84, y: mapHeight * 0.80, targetX: mapWidth * 0.84, targetY: mapHeight * 0.80 },      // Southeast corner
+      // { id: 'blogDoor', requiredUnlock: 'blog', label: 'Blog Library', x: mapWidth * 0.84, y: mapHeight * 0.80, targetX: mapWidth * 0.84, targetY: mapHeight * 0.80 },      // Southeast corner - commented out
       { id: 'contactDoor', requiredUnlock: 'contact', label: 'Contact Office', x: mapWidth * 0.10, y: mapHeight * 0.80, targetX: mapWidth * 0.10, targetY: mapHeight * 0.80 },  // Southwest corner
     ];
 
@@ -601,7 +601,7 @@ export default class WorldScene extends Phaser.Scene {
     }
 
     // Handle player movement
-    const speed = 320; // Increased from 200 for faster movement
+    const speed = 276; // Increased from 200 for faster movement
     let velocityX = 0;
     let velocityY = 0;
 

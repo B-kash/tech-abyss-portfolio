@@ -1,0 +1,28 @@
+{
+  "posts": [
+    {
+      "title": "Building Interactive Portfolios with Phaser 3",
+      "date": "2024-01-15",
+      "excerpt": "Learn how to create engaging portfolio websites that double as playable games. This post covers the basics of Phaser 3, map loading, and interaction systems.",
+      "link": "/blog/building-interactive-portfolios"
+    },
+    {
+      "title": "TypeScript Best Practices for Game Development",
+      "date": "2024-01-10",
+      "excerpt": "TypeScript can significantly improve your game development workflow. Here are some tips and patterns I've learned while building games.",
+      "link": "/blog/typescript-game-dev"
+    },
+    {
+      "title": "Creating Engaging User Experiences",
+      "date": "2024-01-05",
+      "excerpt": "What makes a user experience memorable? Exploring the intersection of game design and web development.",
+      "link": "/blog/engaging-ux"
+    },
+    {
+      "title": "Getting Started with Tiled Map Editor",
+      "date": "2024-01-01",
+      "excerpt": "A beginner's guide to creating game maps with Tiled. Learn how to set up layers, objects, and properties for your Phaser games.",
+      "link": "/blog/tiled-map-editor"
+    }
+  ]
+}
