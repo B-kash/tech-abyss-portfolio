@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { SaveSystem } from '../systems/SaveSystem';
-import { InteractionSystem, Interactable } from '../systems/InteractionSystem';
+import { InteractionSystem } from '../systems/InteractionSystem';
 import { DialogUI } from '../ui/DialogUI';
 import { ContentOverlay, ContentType } from '../ui/ContentOverlay';
 import { getDialog } from '../data/dialogs';
@@ -28,7 +28,7 @@ export default class WorldScene extends Phaser.Scene {
   private escapeKey!: Phaser.Input.Keyboard.Key;
   
   private map!: Phaser.Tilemaps.Tilemap;
-  private groundLayer!: Phaser.Tilemaps.TilemapLayer;
+  private groundLayer!: Phaser.Tilemaps.TilemapLayer | null;
   private collisionLayer!: Phaser.Physics.Arcade.StaticGroup;
   
   private interactionSystem!: InteractionSystem;
@@ -46,7 +46,7 @@ export default class WorldScene extends Phaser.Scene {
     // Initialize systems
     this.interactionSystem = new InteractionSystem();
     this.dialogUI = new DialogUI(this);
-    this.contentOverlay = new ContentOverlay(this);
+    this.contentOverlay = new ContentOverlay();
 
     // Setup input
     this.setupInput();
@@ -91,7 +91,7 @@ export default class WorldScene extends Phaser.Scene {
     try {
       this.map = this.make.tilemap({ key: 'worldMap' });
       this.map.addTilesetImage('tileset', 'tileset');
-      this.groundLayer = this.map.createLayer('Ground', 'tileset', 0, 0) || this.map.createLayer('ground', 'tileset', 0, 0);
+      this.groundLayer = this.map.createLayer('Ground', 'tileset', 0, 0) || this.map.createLayer('ground', 'tileset', 0, 0) || null;
       
       if (!this.groundLayer) {
         console.warn('Ground layer not found, creating blank layer');
@@ -101,8 +101,9 @@ export default class WorldScene extends Phaser.Scene {
         const tileset = this.map.getTileset('tileset');
         
         if (tileset) {
-          this.groundLayer = this.map.createBlankLayer('Ground', tileset, 0, 0, mapWidth / 16, mapHeight / 16);
-          if (this.groundLayer) {
+          const newLayer = this.map.createBlankLayer('Ground', tileset, 0, 0, mapWidth / 16, mapHeight / 16);
+          if (newLayer) {
+            this.groundLayer = newLayer;
             // Fill with ground tiles (tile index 1 = grass, or 0 if tileset uses 0-based)
             this.groundLayer.fill(1);
           }
@@ -165,7 +166,12 @@ export default class WorldScene extends Phaser.Scene {
     
     const tileset = this.map.addTilesetImage('tileset', 'tileset', 16, 16, 0, 0);
     if (tileset) {
-      this.groundLayer = this.map.createBlankLayer('Ground', tileset, 0, 0, mapWidth / 16, mapHeight / 16);
+      const newLayer = this.map.createBlankLayer('Ground', tileset, 0, 0, mapWidth / 16, mapHeight / 16);
+      this.groundLayer = newLayer || null;
+      if (this.groundLayer) {
+        // Fill with ground tiles
+        this.groundLayer.fill(1);
+      }
       
       // Fill with ground tiles
       if (this.groundLayer) {
@@ -441,7 +447,6 @@ export default class WorldScene extends Phaser.Scene {
         this.dialogUI.advance();
       } else {
         // Check for any other key being pressed (for "any key" functionality)
-        const keys = this.input.keyboard!.addKeys('ENTER');
         const enterKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
         if (Phaser.Input.Keyboard.JustDown(enterKey)) {
           this.dialogUI.advance();

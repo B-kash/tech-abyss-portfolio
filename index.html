@@ -22,10 +22,190 @@
       width: 100vw;
       height: 100vh;
     }
+    
+    /* Content Modal Styles */
+    #content-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 10000;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-out;
+    }
+    
+    #content-modal.show {
+      display: flex;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    
+    .modal-content {
+      background: #1a1a2e;
+      border: 3px solid #16213e;
+      border-radius: 8px;
+      width: 85%;
+      max-width: 900px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      animation: slideUp 0.3s ease-out;
+    }
+    
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    .modal-header {
+      padding: 20px 30px;
+      border-bottom: 2px solid #16213e;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .modal-title {
+      color: #00ffff;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    
+    .modal-close {
+      background: transparent;
+      border: 2px solid #00ffff;
+      color: #00ffff;
+      font-size: 24px;
+      width: 36px;
+      height: 36px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      font-family: 'Courier New', monospace;
+    }
+    
+    .modal-close:hover {
+      background: #00ffff;
+      color: #1a1a2e;
+    }
+    
+    .modal-body {
+      padding: 30px;
+      overflow-y: auto;
+      flex: 1;
+      color: #ffffff;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+    
+    .modal-body::-webkit-scrollbar {
+      width: 10px;
+    }
+    
+    .modal-body::-webkit-scrollbar-track {
+      background: #16213e;
+      border-radius: 5px;
+    }
+    
+    .modal-body::-webkit-scrollbar-thumb {
+      background: #00ffff;
+      border-radius: 5px;
+    }
+    
+    .modal-body::-webkit-scrollbar-thumb:hover {
+      background: #00cccc;
+    }
+    
+    .modal-body pre {
+      background: #16213e;
+      padding: 15px;
+      border-radius: 4px;
+      overflow-x: auto;
+      margin: 10px 0;
+    }
+    
+    .modal-body code {
+      background: #16213e;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+    
+    .modal-body h1, .modal-body h2, .modal-body h3 {
+      color: #00ffff;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+    
+    .modal-body ul, .modal-body ol {
+      margin-left: 20px;
+      margin-bottom: 15px;
+    }
+    
+    .modal-body li {
+      margin-bottom: 8px;
+    }
+    
+    .modal-body a {
+      color: #00ffff;
+      text-decoration: underline;
+    }
+    
+    .modal-body a:hover {
+      color: #00cccc;
+    }
+    
+    .modal-footer {
+      padding: 15px 30px;
+      border-top: 2px solid #16213e;
+      text-align: center;
+      color: #888888;
+      font-size: 14px;
+      font-style: italic;
+    }
   </style>
 </head>
 <body>
   <div id="game-container"></div>
+  
+  <!-- Content Modal -->
+  <div id="content-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-title">Content</h2>
+        <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        Loading...
+      </div>
+      <div class="modal-footer">
+        Press ESC to close
+      </div>
+    </div>
+  </div>
+  
   <script type="module" src="/src/main.ts"></script>
 </body>
 </html>
