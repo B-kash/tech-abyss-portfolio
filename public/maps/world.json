@@ -1,0 +1,302 @@
+{
+  "compressionlevel": -1,
+  "height": 125,
+  "infinite": false,
+  "layers": [
+    {
+      "data": [],
+      "height": 125,
+      "id": 1,
+      "name": "Ground",
+      "opacity": 1,
+      "type": "tilelayer",
+      "visible": true,
+      "width": 125,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "draworder": "topdown",
+      "id": 2,
+      "name": "Collisions",
+      "objects": [
+        {
+          "height": 100,
+          "id": 1,
+          "name": "Wall1",
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 100,
+          "x": 500,
+          "y": 500
+        },
+        {
+          "height": 100,
+          "id": 2,
+          "name": "Wall2",
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 150,
+          "x": 1000,
+          "y": 800
+        },
+        {
+          "height": 200,
+          "id": 3,
+          "name": "Wall3",
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 100,
+          "x": 1500,
+          "y": 400
+        }
+      ],
+      "opacity": 1,
+      "type": "objectgroup",
+      "visible": true,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "draworder": "topdown",
+      "id": 3,
+      "name": "npcs",
+      "objects": [
+        {
+          "height": 32,
+          "id": 4,
+          "name": "Guide",
+          "properties": [
+            {
+              "name": "id",
+              "type": "string",
+              "value": "guide"
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "value": "Guide"
+            },
+            {
+              "name": "dialogId",
+              "type": "string",
+              "value": "guide"
+            }
+          ],
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 32,
+          "x": 400,
+          "y": 432
+        },
+        {
+          "height": 32,
+          "id": 5,
+          "name": "Engineer",
+          "properties": [
+            {
+              "name": "id",
+              "type": "string",
+              "value": "engineer"
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "value": "Engineer"
+            },
+            {
+              "name": "dialogId",
+              "type": "string",
+              "value": "engineer"
+            }
+          ],
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 32,
+          "x": 1200,
+          "y": 832
+        },
+        {
+          "height": 32,
+          "id": 6,
+          "name": "Writer",
+          "properties": [
+            {
+              "name": "id",
+              "type": "string",
+              "value": "writer"
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "value": "Writer"
+            },
+            {
+              "name": "dialogId",
+              "type": "string",
+              "value": "writer"
+            }
+          ],
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 32,
+          "x": 1600,
+          "y": 1232
+        }
+      ],
+      "opacity": 1,
+      "type": "objectgroup",
+      "visible": true,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "draworder": "topdown",
+      "id": 4,
+      "name": "doors",
+      "objects": [
+        {
+          "height": 64,
+          "id": 7,
+          "name": "AboutDoor",
+          "properties": [
+            {
+              "name": "id",
+              "type": "string",
+              "value": "aboutDoor"
+            },
+            {
+              "name": "requiredUnlock",
+              "type": "string",
+              "value": "about"
+            },
+            {
+              "name": "targetX",
+              "type": "int",
+              "value": 800
+            },
+            {
+              "name": "targetY",
+              "type": "int",
+              "value": 600
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "value": "About House"
+            }
+          ],
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 64,
+          "x": 568,
+          "y": 400
+        },
+        {
+          "height": 64,
+          "id": 8,
+          "name": "ProjectsDoor",
+          "properties": [
+            {
+              "name": "id",
+              "type": "string",
+              "value": "projectsDoor"
+            },
+            {
+              "name": "requiredUnlock",
+              "type": "string",
+              "value": "projects"
+            },
+            {
+              "name": "targetX",
+              "type": "int",
+              "value": 1200
+            },
+            {
+              "name": "targetY",
+              "type": "int",
+              "value": 900
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "value": "Projects Lab"
+            }
+          ],
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 64,
+          "x": 1368,
+          "y": 600
+        },
+        {
+          "height": 64,
+          "id": 9,
+          "name": "BlogDoor",
+          "properties": [
+            {
+              "name": "id",
+              "type": "string",
+              "value": "blogDoor"
+            },
+            {
+              "name": "requiredUnlock",
+              "type": "string",
+              "value": "blog"
+            },
+            {
+              "name": "targetX",
+              "type": "int",
+              "value": 1700
+            },
+            {
+              "name": "targetY",
+              "type": "int",
+              "value": 1600
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "value": "Blog Library"
+            }
+          ],
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 64,
+          "x": 1768,
+          "y": 1400
+        }
+      ],
+      "opacity": 1,
+      "type": "objectgroup",
+      "visible": true,
+      "x": 0,
+      "y": 0
+    }
+  ],
+  "nextlayerid": 5,
+  "nextobjectid": 10,
+  "orientation": "orthogonal",
+  "renderorder": "right-down",
+  "tiledversion": "1.10.2",
+  "tileheight": 16,
+  "tilesets": [
+    {
+      "firstgid": 1,
+      "source": "tileset.tsx"
+    }
+  ],
+  "tilewidth": 16,
+  "type": "map",
+  "version": "1.10",
+  "width": 125
+}

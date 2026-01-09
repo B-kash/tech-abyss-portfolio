@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Tech Abyss Portfolio",
+    "description": "An interactive 2D open-world portfolio website built as a playable game. Explore the world, talk to NPCs, and discover content areas.",
+    "tech": ["TypeScript", "Phaser 3", "Vite"],
+    "link": "https://github.com/yourusername/tech-abyss-portfolio"
+  },
+  {
+    "title": "Example E-Commerce Platform",
+    "description": "A full-stack e-commerce platform with user authentication, product management, and payment integration.",
+    "tech": ["React", "Node.js", "PostgreSQL", "Stripe"],
+    "link": "https://example-ecommerce.com"
+  },
+  {
+    "title": "Real-time Chat Application",
+    "description": "A real-time messaging application with rooms, file sharing, and message history.",
+    "tech": ["React", "Socket.io", "Express", "MongoDB"],
+    "link": "https://example-chat.com"
+  },
+  {
+    "title": "Task Management Dashboard",
+    "description": "A collaborative task management tool with drag-and-drop, real-time updates, and team collaboration features.",
+    "tech": ["Vue.js", "Node.js", "WebSockets", "MySQL"],
+    "link": "https://example-tasks.com"
+  }
+]
