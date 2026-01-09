@@ -1,17 +1,19 @@
 # Tech Abyss - Interactive Portfolio Game
 
-A 2D open-world portfolio website built as a playable game using Phaser 3, TypeScript, and Vite.
+A 2D open-world portfolio website built as a playable game using Phaser 3, TypeScript, and Vite. Explore a game world, interact with NPCs, unlock buildings, and discover portfolio content through an immersive gaming experience.
 
 ## 🎮 Features
 
-- **2D Open World**: Explore a large map with buildings and NPCs
-- **Player Movement**: WASD or Arrow Keys for movement
-- **NPC Interactions**: Talk to NPCs to unlock new areas
-- **Zone System**: Unlock and access About, Projects, and Blog sections
+- **2D Open World**: Explore a 1024×1024 pixel world with wrapping boundaries
+- **Player Movement**: WASD or Arrow Keys for movement (276 px/s)
+- **NPC Interactions**: Talk to NPCs to unlock new areas and learn about the developer
+- **Zone System**: Unlock and access About, Projects, and Contact sections
 - **Save System**: Progress persists in localStorage (unlocked zones + player position)
-- **Collision Detection**: Walls and obstacles prevent walking through objects
-- **Dialog System**: Interactive conversations with NPCs
-- **Content Overlays**: View portfolio content in-game
+- **Collision Detection**: Player cannot walk through NPCs or buildings
+- **Building System**: Distinct building sprites for each zone type with collision
+- **Dialog System**: Interactive conversations with NPCs featuring typewriter effect
+- **Content Overlays**: View portfolio content in HTML modals with typewriter animations
+- **World Wrapping**: Seamless looping - exit one edge to appear on the opposite side
 
 ## 🚀 Quick Start
 
@@ -53,24 +55,26 @@ npm run preview
 
 ## 🗺️ Game World
 
-The game world contains:
+The game world is a 1024×1024 pixel (64×64 tile) map with wrapping boundaries. The world contains:
 
-- **Town Center**: Starting area with a Guide NPC
-- **About House**: Unlocked after talking to the Guide
-- **Projects Lab**: Unlocked after talking to the Engineer
-- **Blog Library**: Unlocked after talking to the Writer
+- **Starting Area**: Center of the world with Guide NPC nearby
+- **About House**: Unlocked after talking to the Guide (Northwest area)
+- **Projects Lab**: Unlocked after talking to the Engineer (Northeast area)
+- **Contact Office**: Unlocked after talking to the Contact NPC (Southwest area)
 
 ### NPCs
 
-- **Guide**: Explains controls and unlocks the About section
-- **Engineer**: Unlocks the Projects Lab
-- **Writer**: Unlocks the Blog Library
+- **Guide**: Located near starting position, explains controls and unlocks the About House
+- **Engineer**: Located in the east area, unlocks the Projects Lab
+- **Contact**: Located in the west area, unlocks the Contact Office
 
-### Doors/Zones
+### Buildings/Doors
 
-- Doors show as orange rectangles when locked
-- Doors show as green rectangles when unlocked
-- Interacting with an unlocked door teleports you and shows the zone content
+- Buildings are represented as distinct sprites (houses/labs/offices)
+- Buildings have collision - player cannot walk through them
+- Interacting with an unlocked building (E or Space) teleports you and shows the zone content
+- Locked buildings appear darker (gray tint) with "(Locked)" label
+- Unlocked buildings appear in full color
 
 ## 📁 Project Structure
 
@@ -79,10 +83,11 @@ tech-abyss_website/
 ├── public/
 │   ├── content/          # Portfolio content files
 │   │   ├── about.md      # About section markdown
-│   │   ├── projects.json # Projects list
-│   │   └── blog.json     # Blog posts index
+│   │   ├── projects.json # Projects list (Tech Abyss, Video Subtitles, Music Master, etc.)
+│   │   ├── blog.json     # Blog posts index
+│   │   └── contact.json  # Contact information (email, GitHub, LinkedIn, social)
 │   └── maps/             # Tiled map files
-│       ├── world.json    # Main game map (Tiled JSON export)
+│       ├── world.json    # Main game map (64×64 tiles = 1024×1024 pixels)
 │       └── tileset.tsx   # Tileset definition
 ├── src/
 │   ├── scenes/           # Phaser scenes
@@ -92,8 +97,8 @@ tech-abyss_website/
 │   │   ├── SaveSystem.ts      # LocalStorage save/load
 │   │   └── InteractionSystem.ts # NPC/door interaction logic
 │   ├── ui/               # UI components
-│   │   ├── DialogUI.ts   # NPC dialog overlay
-│   │   └── ContentOverlay.ts # About/Projects/Blog overlay
+│   │   ├── DialogUI.ts   # NPC dialog overlay (Phaser-based, fixed to screen)
+│   │   └── ContentOverlay.ts # About/Projects/Contact overlay (HTML/CSS modal)
 │   ├── data/             # Game data
 │   │   └── dialogs.ts    # NPC dialog definitions
 │   └── main.ts           # Game entry point
@@ -146,9 +151,10 @@ The game expects the following layers in your Tiled map:
 
 ### Adding Content
 
-- **About**: Edit `public/content/about.md` (Markdown)
-- **Projects**: Edit `public/content/projects.json` (JSON array)
+- **About**: Edit `public/content/about.md` (Markdown format)
+- **Projects**: Edit `public/content/projects.json` (JSON array with title, description, tech, link)
 - **Blog**: Edit `public/content/blog.json` (JSON with posts array)
+- **Contact**: Edit `public/content/contact.json` (JSON with email, GitHub, LinkedIn, social, message)
 
 ### Adding NPCs and Dialogs
 
@@ -167,11 +173,18 @@ The game expects the following layers in your Tiled map:
 
 ### Custom Sprites
 
-Replace the programmatic sprite generation in `BootScene.ts` with actual image loading:
+Sprites are currently generated programmatically in `BootScene.ts`:
+- Player sprite (32×32, blue shirt, pixel-art style)
+- NPC sprites (32×32, unique colors per NPC: Guide=orange, Engineer=cyan, Contact=green)
+- Building sprites (64×80, distinct colors: About=tan, Projects=blue, Contact=light green)
+- Tileset (128×128, 8×8 tiles, various terrain types)
+- Background pattern (64×64, sky with clouds)
 
+To use custom images instead, replace in `BootScene.ts`:
 ```typescript
 this.load.image('player', 'path/to/player.png');
-this.load.image('npc', 'path/to/npc.png');
+this.load.image('npc_guide', 'path/to/guide.png');
+this.load.image('building_about', 'path/to/about-building.png');
 this.load.image('tileset', 'path/to/tileset.png');
 ```
 
@@ -182,8 +195,8 @@ Saves are stored in localStorage with the following structure:
 ```typescript
 {
   version: 1,
-  unlockedZones: ['about', 'projects'],
-  playerPosition: { x: 300, y: 400 }
+  unlockedZones: ['about', 'projects', 'contact'],
+  playerPosition: { x: 512, y: 512 }
 }
 ```
 

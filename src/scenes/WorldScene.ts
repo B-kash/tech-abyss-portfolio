@@ -658,7 +658,6 @@ export default class WorldScene extends Phaser.Scene {
       const hasUnlocked = SaveSystem.isZoneUnlocked(
         npcData.id === 'guide' ? 'about' :
         npcData.id === 'engineer' ? 'projects' :
-        npcData.id === 'writer' ? 'blog' :
         npcData.id === 'contact' ? 'contact' : ''
       );
       
@@ -724,10 +723,10 @@ export default class WorldScene extends Phaser.Scene {
       this.player.setPosition(x, y);
       this.savePlayerPosition();
       
-      // Show content overlay for zones
-      if (zone === 'about' || zone === 'projects' || zone === 'blog' || zone === 'contact') {
-        this.contentOverlay.show(zone as ContentType);
-      }
+              // Show content overlay for zones
+              if (zone === 'about' || zone === 'projects' || zone === 'contact') {
+                this.contentOverlay.show(zone as ContentType);
+              }
       
       // Fade in
       this.cameras.main.fadeIn(300, 0, 0, 0);

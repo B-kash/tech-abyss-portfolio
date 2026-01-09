@@ -62,9 +62,6 @@ export default class BootScene extends Phaser.Scene {
     // Engineer NPC (Blue/Cyan)
     this.createNPC('npc_engineer', 0x00ced1, 0x008b8b);
     
-    // Writer NPC (Purple)
-    this.createNPC('npc_writer', 0x9370db, 0x663399);
-    
     // Contact NPC (Green/Teal)
     this.createNPC('npc_contact', 0x32cd32, 0x228b22);
     

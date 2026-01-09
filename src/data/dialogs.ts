@@ -15,8 +15,8 @@ export const dialogs: Record<string, Dialog> = {
     lines: [
       { speaker: 'Guide', text: 'Welcome to the Tech Abyss! This is an interactive portfolio experience.' },
       { speaker: 'Guide', text: 'CONTROLS:\n• Use WASD or Arrow Keys to move your character\n• Press E or Space to interact with NPCs and doors\n• Press ESC to close dialogs and overlays' },
-      { speaker: 'Guide', text: 'HOW TO PLAY:\n• Talk to NPCs to learn about different areas\n• Each NPC can unlock new zones for you\n• Doors marked in orange are locked - find the right NPC to unlock them\n• Green doors are unlocked and will teleport you to special content areas' },
-      { speaker: 'Guide', text: 'YOUR MISSION:\n• Find the Engineer NPC to unlock the Projects Lab\n• Find the Writer NPC to unlock the Blog Library\n• Explore all the areas to see portfolio content!' },
+      { speaker: 'Guide', text: 'HOW TO PLAY:\n• Talk to NPCs to learn about different areas\n• Each NPC can unlock new zones for you\n• Locked buildings appear gray - find the right NPC to unlock them\n• Unlocked buildings will teleport you to special content areas' },
+      { speaker: 'Guide', text: 'YOUR MISSION:\n• Find the Engineer NPC to unlock the Projects Lab\n• Find the Contact NPC to unlock the Contact Office\n• Explore all the areas to see portfolio content!' },
       { speaker: 'Guide', text: 'Let me unlock the About House for you now... You can enter it to learn more about the developer!' },
     ],
     unlocksZone: 'about',
