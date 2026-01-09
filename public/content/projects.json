@@ -1,26 +1,44 @@
 [
   {
     "title": "Tech Abyss Portfolio",
-    "description": "An interactive 2D open-world portfolio website built as a playable game. Explore the world, talk to NPCs, and discover content areas.",
+    "description": "An interactive 2D open-world portfolio website built as a playable game using Phaser 3. Explore the world, talk to NPCs, and discover content areas in this unique gaming portfolio experience.",
     "tech": ["TypeScript", "Phaser 3", "Vite"],
-    "link": "https://github.com/yourusername/tech-abyss-portfolio"
+    "link": "https://github.com/b-kash"
   },
   {
-    "title": "Example E-Commerce Platform",
-    "description": "A full-stack e-commerce platform with user authentication, product management, and payment integration.",
-    "tech": ["React", "Node.js", "PostgreSQL", "Stripe"],
-    "link": "https://example-ecommerce.com"
+    "title": "Video Subtitles",
+    "description": "A TypeScript-based application for managing and working with video subtitles. Features subtitle editing, synchronization, and export functionality.",
+    "tech": ["TypeScript", "Video Processing"],
+    "link": "https://github.com/b-kash/video-subtitles"
   },
   {
-    "title": "Real-time Chat Application",
-    "description": "A real-time messaging application with rooms, file sharing, and message history.",
-    "tech": ["React", "Socket.io", "Express", "MongoDB"],
-    "link": "https://example-chat.com"
+    "title": "Music Master",
+    "description": "A TypeScript application for music management and audio processing. Create, organize, and manage your music library with advanced features.",
+    "tech": ["TypeScript", "Audio Processing"],
+    "link": "https://github.com/b-kash/music-master"
   },
   {
-    "title": "Task Management Dashboard",
-    "description": "A collaborative task management tool with drag-and-drop, real-time updates, and team collaboration features.",
-    "tech": ["Vue.js", "Node.js", "WebSockets", "MySQL"],
-    "link": "https://example-tasks.com"
+    "title": "Speech to Text",
+    "description": "A speech recognition application that converts spoken words into text. Features real-time transcription, multiple language support, and audio processing capabilities.",
+    "tech": ["TypeScript", "Speech Recognition", "Web APIs"],
+    "link": "https://github.com/b-kash/speech-to-text"
+  },
+  {
+    "title": "Text to QR",
+    "description": "A utility application that converts text input into QR codes. Generate QR codes for URLs, contact information, or any text content with customizable styling options.",
+    "tech": ["TypeScript", "QR Code Generation"],
+    "link": "https://github.com/b-kash/text_to_qr"
+  },
+  {
+    "title": "HTML Fight",
+    "description": "An interactive HTML-based game or application. Experience web-based gameplay with HTML, CSS, and JavaScript creating engaging user interactions.",
+    "tech": ["HTML", "CSS", "JavaScript"],
+    "link": "https://github.com/b-kash/html-fight"
+  },
+  {
+    "title": "Brick Breaker Remake",
+    "description": "A classic brick breaker game remake built with Java for Android. Learning android development through game development - a fun and educational project.",
+    "tech": ["Java", "Android", "Game Development"],
+    "link": "https://github.com/b-kash/brick-breaker-remake"
   }
 ]
