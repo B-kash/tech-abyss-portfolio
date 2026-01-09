@@ -3,7 +3,7 @@
     "title": "Tech Abyss Portfolio",
     "description": "An interactive 2D open-world portfolio website built as a playable game using Phaser 3. Explore the world, talk to NPCs, and discover content areas in this unique gaming portfolio experience.",
     "tech": ["TypeScript", "Phaser 3", "Vite"],
-    "link": "https://github.com/b-kash"
+    "link": "https://github.com/b-kash/tech-abyss-portfolio"
   },
   {
     "title": "Video Subtitles",
