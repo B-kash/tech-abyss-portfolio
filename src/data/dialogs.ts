@@ -58,6 +58,21 @@ export const dialogs: Record<string, Dialog> = {
       { speaker: 'Writer', text: 'The Blog Library contains all my writings. Enjoy!' },
     ],
   },
+  contact: {
+    id: 'contact',
+    lines: [
+      { speaker: 'Contact', text: 'Hello! I\'m here to help you get in touch.' },
+      { speaker: 'Contact', text: 'Interested in collaborating? Have a project in mind? Or just want to say hello?' },
+      { speaker: 'Contact', text: 'I\'ll unlock my contact information for you! Look for the contact building nearby.' },
+    ],
+    unlocksZone: 'contact',
+  },
+  contact_repeat: {
+    id: 'contact_repeat',
+    lines: [
+      { speaker: 'Contact', text: 'Feel free to reach out anytime! Check the Contact building for my details.' },
+    ],
+  },
 };
 
 export function getDialog(npcId: string, hasUnlocked: boolean): Dialog {

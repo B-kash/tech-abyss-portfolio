@@ -36,7 +36,8 @@ export default class WorldScene extends Phaser.Scene {
   private contentOverlay!: ContentOverlay;
   
   private npcs: Map<string, Phaser.GameObjects.Sprite> = new Map();
-  private doors: Map<string, { sprite: Phaser.GameObjects.Rectangle; data: DoorData }> = new Map();
+  private doors: Map<string, { building: Phaser.GameObjects.Sprite; data: DoorData; label: Phaser.GameObjects.Text }> = new Map();
+  private buildings: Map<string, { sprite: Phaser.GameObjects.Sprite; body: Phaser.Physics.Arcade.StaticBody }> = new Map();
 
   constructor() {
     super({ key: 'WorldScene' });
@@ -51,24 +52,44 @@ export default class WorldScene extends Phaser.Scene {
     // Setup input
     this.setupInput();
 
-    // Load map
+    // Load map first (needed for background size)
     this.loadMap();
+
+    // Create background (after map is loaded)
+    this.createBackground();
 
     // Create player
     this.createPlayer();
 
-    // Setup camera
-    this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+        // Setup camera - don't set bounds for wrapping world
     this.cameras.main.startFollow(this.player);
     this.cameras.main.setZoom(1.5);
 
-    // Setup collisions
+    // Setup wall collisions
     this.setupCollisions();
 
-    // Load NPCs and doors from map
+    // Load NPCs and doors from map (buildings are created with doors)
     this.loadNPCs();
     this.loadDoors();
+    
+    // Set up sprite collisions after all objects are created
+    this.setupSpriteCollisions();
   }
+
+  private setupSpriteCollisions(): void {
+    // Collision between NPCs (they shouldn't overlap) - set up here as fallback
+    // Note: Player collisions are set up immediately when NPCs/buildings are created
+    const npcArray = Array.from(this.npcs.values());
+    for (let i = 0; i < npcArray.length; i++) {
+      for (let j = i + 1; j < npcArray.length; j++) {
+        this.physics.add.collider(npcArray[i], npcArray[j]);
+      }
+    }
+  }
+
+  private dialogKeyHandler?: (event: KeyboardEvent) => void;
+  private dialogKeyHandlerActive = false;
+  private pressedKeys = new Set<string>();
 
   private setupInput(): void {
     this.cursors = this.input.keyboard!.createCursorKeys();
@@ -84,6 +105,29 @@ export default class WorldScene extends Phaser.Scene {
         this.dialogUI.hide();
       }
     });
+
+    // Setup global key handler for dialogs (to catch ANY key press)
+    this.dialogKeyHandler = (event: KeyboardEvent) => {
+      if (this.dialogUI.isDialogVisible()) {
+        // Track key presses to prevent multiple triggers
+        if (this.pressedKeys.has(event.code)) {
+          return; // Key already being processed
+        }
+        this.pressedKeys.add(event.code);
+
+        if (event.key === 'Escape') {
+          this.dialogUI.hide();
+        } else {
+          // Any other key advances the dialog
+          this.dialogUI.advance();
+        }
+
+        // Clear the key after a short delay to allow next press
+        setTimeout(() => {
+          this.pressedKeys.delete(event.code);
+        }, 100);
+      }
+    };
   }
 
   private loadMap(): void {
@@ -96,16 +140,29 @@ export default class WorldScene extends Phaser.Scene {
       if (!this.groundLayer) {
         console.warn('Ground layer not found, creating blank layer');
         // Create a blank layer if it doesn't exist
-        const mapWidth = this.map.widthInPixels || 2000;
-        const mapHeight = this.map.heightInPixels || 2000;
+        const mapWidth = this.map.widthInPixels || 1024;
+        const mapHeight = this.map.heightInPixels || 1024;
         const tileset = this.map.getTileset('tileset');
         
         if (tileset) {
           const newLayer = this.map.createBlankLayer('Ground', tileset, 0, 0, mapWidth / 16, mapHeight / 16);
           if (newLayer) {
             this.groundLayer = newLayer;
-            // Fill with ground tiles (tile index 1 = grass, or 0 if tileset uses 0-based)
-            this.groundLayer.fill(1);
+            // Fill with a varied ground pattern
+            const width = newLayer.width;
+            const height = newLayer.height;
+            for (let y = 0; y < height; y++) {
+              for (let x = 0; x < width; x++) {
+                // Create varied terrain - mostly grass with some dirt paths
+                let tileIndex = 0; // Default grass
+                if ((x + y * 3) % 15 === 0) {
+                  tileIndex = 4; // Dirt path
+                } else if ((x * y) % 20 === 0) {
+                  tileIndex = 1; // Grass variant
+                }
+                newLayer.putTileAt(tileIndex, x, y);
+              }
+            }
           }
         }
       } else if (this.groundLayer) {
@@ -154,8 +211,9 @@ export default class WorldScene extends Phaser.Scene {
 
   private createFallbackMap(): void {
     // Create a simple fallback map if Tiled map fails to load
-    const mapWidth = 2000;
-    const mapHeight = 2000;
+    // Make it large enough to accommodate all NPCs and doors (64x64 tiles = 1024x1024 pixels)
+    const mapWidth = 1024;
+    const mapHeight = 1024;
     
     this.map = this.make.tilemap({ 
       tileWidth: 16, 
@@ -169,25 +227,38 @@ export default class WorldScene extends Phaser.Scene {
       const newLayer = this.map.createBlankLayer('Ground', tileset, 0, 0, mapWidth / 16, mapHeight / 16);
       this.groundLayer = newLayer || null;
       if (this.groundLayer) {
-        // Fill with ground tiles
-        this.groundLayer.fill(1);
-      }
-      
-      // Fill with ground tiles
-      if (this.groundLayer) {
-        this.groundLayer.fill(1); // Use tile index 1 (should be a ground tile)
+        // Fill with varied ground pattern
+        const width = this.groundLayer.width;
+        const height = this.groundLayer.height;
+        for (let y = 0; y < height; y++) {
+          for (let x = 0; x < width; x++) {
+            // Create varied terrain - mostly grass with some dirt paths
+            let tileIndex = 0; // Default grass
+            if ((x + y * 3) % 15 === 0) {
+              tileIndex = 4; // Dirt path
+            } else if ((x * y) % 20 === 0) {
+              tileIndex = 1; // Grass variant
+            }
+            this.groundLayer.putTileAt(tileIndex, x, y);
+          }
+        }
       }
     }
   }
 
   private createPlayer(): void {
     const saveData = SaveSystem.load();
-    const startX = saveData?.playerPosition.x ?? 300;
-    const startY = saveData?.playerPosition.y ?? 300;
+    const mapWidth = this.map ? this.map.widthInPixels : 1024;
+    const mapHeight = this.map ? this.map.heightInPixels : 1024;
+    // Start player in center-ish area, with guide nearby
+    const startX = saveData?.playerPosition.x ?? mapWidth * 0.5;
+    const startY = saveData?.playerPosition.y ?? mapHeight * 0.5;
 
     this.player = this.physics.add.sprite(startX, startY, 'player');
-    this.player.setCollideWorldBounds(true);
+    // Disable world bounds collision for wrapping world
+    this.player.setCollideWorldBounds(false);
     this.player.setScale(1);
+    this.player.setDepth(500); // Player should be above buildings and doors
   }
 
   private setupCollisions(): void {
@@ -211,46 +282,50 @@ export default class WorldScene extends Phaser.Scene {
     }
 
     // Add some default collision rectangles if none exist
-    if (this.collisionLayer.children.entries.length === 0) {
-      // Add walls around the map
-      const wallThickness = 50;
-      const mapWidth = this.map ? this.map.widthInPixels : 2000;
-      const mapHeight = this.map ? this.map.heightInPixels : 2000;
-
-      // Top wall
-      const topWall = this.add.rectangle(mapWidth / 2, -wallThickness / 2, mapWidth, wallThickness, 0xff0000, 0.3);
-      this.physics.add.existing(topWall, true);
-      this.collisionLayer.add(topWall);
-
-      // Bottom wall
-      const bottomWall = this.add.rectangle(mapWidth / 2, mapHeight + wallThickness / 2, mapWidth, wallThickness, 0xff0000, 0.3);
-      this.physics.add.existing(bottomWall, true);
-      this.collisionLayer.add(bottomWall);
-
-      // Left wall
-      const leftWall = this.add.rectangle(-wallThickness / 2, mapHeight / 2, wallThickness, mapHeight, 0xff0000, 0.3);
-      this.physics.add.existing(leftWall, true);
-      this.collisionLayer.add(leftWall);
-
-      // Right wall
-      const rightWall = this.add.rectangle(mapWidth + wallThickness / 2, mapHeight / 2, wallThickness, mapHeight, 0xff0000, 0.3);
-      this.physics.add.existing(rightWall, true);
-      this.collisionLayer.add(rightWall);
-
-      // Add some internal obstacles
-      this.addCollisionRect(500, 500, 100, 100);
-      this.addCollisionRect(1000, 800, 150, 100);
-      this.addCollisionRect(1500, 400, 100, 200);
-    }
+    // No walls needed for wrapping world - player will wrap around edges
+    // Keep collision layer for any internal obstacles if needed
 
     // Collision between player and walls
     this.physics.add.collider(this.player, this.collisionLayer);
   }
 
-  private addCollisionRect(x: number, y: number, width: number, height: number): void {
-    const rect = this.add.rectangle(x, y, width, height, 0xff0000, 0.3);
-    this.physics.add.existing(rect, true);
-    this.collisionLayer.add(rect);
+
+  private createBackground(): void {
+    // Create a tiled background using the sky pattern
+    const mapWidth = this.map.widthInPixels;
+    const mapHeight = this.map.heightInPixels;
+    
+    // Create background tiles
+    if (this.textures.exists('sky_bg')) {
+      const bgTileSize = 64;
+      const cols = Math.ceil(mapWidth / bgTileSize);
+      const rows = Math.ceil(mapHeight / bgTileSize);
+      
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          const bgTile = this.add.image(x * bgTileSize, y * bgTileSize, 'sky_bg');
+          bgTile.setOrigin(0, 0);
+          bgTile.setDepth(-1000); // Behind everything
+          bgTile.setScrollFactor(0.1, 0.1); // Slight parallax effect
+        }
+      }
+    } else {
+      // Fallback: solid color background with gradient effect
+      const bg = this.add.rectangle(0, 0, mapWidth, mapHeight, 0x87ceeb);
+      bg.setOrigin(0, 0);
+      bg.setDepth(-1000);
+    }
+  }
+
+  private getNPCSpriteKey(npcId: string): string {
+    // Return the appropriate sprite key based on NPC ID
+    const spriteMap: Record<string, string> = {
+      'guide': 'npc_guide',
+      'engineer': 'npc_engineer',
+      'writer': 'npc_writer',
+      'contact': 'npc_contact',
+    };
+    return spriteMap[npcId] || 'npc';
   }
 
   private loadNPCs(): void {
@@ -265,9 +340,14 @@ export default class WorldScene extends Phaser.Scene {
             dialogId: obj.properties?.find((p: any) => p.name === 'dialogId')?.value || obj.id || 'guide',
           };
 
-          const npc = this.physics.add.sprite(obj.x, obj.y, 'npc');
+          // Use specific sprite based on NPC ID
+          const spriteKey = this.getNPCSpriteKey(npcData.id);
+          const npc = this.physics.add.sprite(obj.x, obj.y, spriteKey);
           npc.setOrigin(0, 1); // Bottom-left origin for Tiled compatibility
           npc.setScale(1);
+          npc.setDepth(400); // Above buildings, below player
+          // Make NPC immovable for collision
+          (npc.body as Phaser.Physics.Arcade.Body).setImmovable(true);
           
           // Add name label
           const nameLabel = this.add.text(obj.x, obj.y - 40, npcData.name, {
@@ -280,6 +360,9 @@ export default class WorldScene extends Phaser.Scene {
           nameLabel.setOrigin(0, 1);
 
           this.npcs.set(npcData.id, npc);
+          
+          // Add collision with player immediately
+          this.physics.add.collider(this.player, npc);
 
           // Add to interaction system
           this.interactionSystem.addInteractable({
@@ -302,16 +385,30 @@ export default class WorldScene extends Phaser.Scene {
   }
 
   private addDefaultNPCs(): void {
+    // Position NPCs spread out across the world
+    const mapWidth = this.map ? this.map.widthInPixels : 1024;
+    const mapHeight = this.map ? this.map.heightInPixels : 1024;
+    
+    // Player starts at center (0.5, 0.5), so guide should be close by
+    const playerStartX = mapWidth * 0.5;
+    const playerStartY = mapHeight * 0.5;
+    
     const defaultNPCs: Array<{ id: string; name: string; x: number; y: number }> = [
-      { id: 'guide', name: 'Guide', x: 400, y: 400 },
-      { id: 'engineer', name: 'Engineer', x: 1200, y: 800 },
-      { id: 'writer', name: 'Writer', x: 1600, y: 1200 },
+      { id: 'guide', name: 'Guide', x: playerStartX + 68, y: playerStartY - 32 },        // Slightly right and up from player starting position
+      { id: 'engineer', name: 'Engineer', x: mapWidth * 0.88, y: mapHeight * 0.34 },  // Far east, upper area
+      { id: 'writer', name: 'Writer', x: mapWidth * 0.34, y: mapHeight * 0.88 },      // Far south, left area
+      { id: 'contact', name: 'Contact', x: mapWidth * 0.1, y: mapHeight * 0.63 },  // Far west, mid area
     ];
 
     defaultNPCs.forEach((npcData) => {
-      const npc = this.physics.add.sprite(npcData.x, npcData.y, 'npc');
+      // Use specific sprite based on NPC ID
+      const spriteKey = this.getNPCSpriteKey(npcData.id);
+      const npc = this.physics.add.sprite(npcData.x, npcData.y, spriteKey);
       npc.setOrigin(0.5, 1);
       npc.setScale(1);
+      npc.setDepth(400); // Above buildings, below player
+      // Make NPC immovable for collision
+      (npc.body as Phaser.Physics.Arcade.Body).setImmovable(true);
 
       const nameLabel = this.add.text(npcData.x, npcData.y - 40, npcData.name, {
         fontSize: '14px',
@@ -323,6 +420,9 @@ export default class WorldScene extends Phaser.Scene {
       nameLabel.setOrigin(0.5, 1);
 
       this.npcs.set(npcData.id, npc);
+      
+      // Add collision with player immediately
+      this.physics.add.collider(this.player, npc);
 
       this.interactionSystem.addInteractable({
         id: npcData.id,
@@ -350,37 +450,17 @@ export default class WorldScene extends Phaser.Scene {
             label: obj.properties?.find((p: any) => p.name === 'label')?.value || 'Door',
           };
 
-          const isUnlocked = SaveSystem.isZoneUnlocked(doorData.requiredUnlock);
-          const doorRect = this.add.rectangle(
-            obj.x + (obj.width || 32) / 2,
-            obj.y + (obj.height || 32) / 2,
-            obj.width || 32,
-            obj.height || 32,
-            isUnlocked ? 0x00ff00 : 0xff6600,
-            0.5
+          const doorX = obj.x + (obj.width || 32) / 2;
+          const doorY = obj.y + (obj.height || 32) / 2;
+          
+          // Create building at door position
+          this.createBuilding(
+            doorX,
+            doorY,
+            this.getBuildingSpriteKey(doorData.requiredUnlock),
+            doorData.id,
+            doorData
           );
-          doorRect.setStrokeStyle(2, isUnlocked ? 0x00aa00 : 0xaa4400);
-
-          const doorLabel = this.add.text(obj.x + (obj.width || 32) / 2, obj.y - 20, doorData.label, {
-            fontSize: '12px',
-            fontFamily: 'Courier New',
-            color: '#ffffff',
-            backgroundColor: '#000000',
-            padding: { x: 4, y: 2 },
-          });
-          doorLabel.setOrigin(0.5, 1);
-
-          this.doors.set(doorData.id, { sprite: doorRect, data: doorData });
-
-          this.interactionSystem.addInteractable({
-            id: doorData.id,
-            x: obj.x,
-            y: obj.y,
-            width: obj.width || 32,
-            height: obj.height || 32,
-            type: 'door',
-            data: doorData,
-          });
         });
       }
     }
@@ -392,26 +472,18 @@ export default class WorldScene extends Phaser.Scene {
   }
 
   private addDefaultDoors(): void {
+    // Position buildings that act as doors, spread out across the world
+    const mapWidth = this.map ? this.map.widthInPixels : 1024;
+    const mapHeight = this.map ? this.map.heightInPixels : 1024;
+    
     const defaultDoors: Array<{ id: string; requiredUnlock: string; label: string; x: number; y: number; targetX: number; targetY: number }> = [
-      { id: 'aboutDoor', requiredUnlock: 'about', label: 'About House', x: 600, y: 400, targetX: 800, targetY: 600 },
-      { id: 'projectsDoor', requiredUnlock: 'projects', label: 'Projects Lab', x: 1400, y: 600, targetX: 1200, targetY: 900 },
-      { id: 'blogDoor', requiredUnlock: 'blog', label: 'Blog Library', x: 1800, y: 1400, targetX: 1700, targetY: 1600 },
+      { id: 'aboutDoor', requiredUnlock: 'about', label: 'About House', x: mapWidth * 0.18, y: mapHeight * 0.18, targetX: mapWidth * 0.18, targetY: mapHeight * 0.18 },      // Northwest corner
+      { id: 'projectsDoor', requiredUnlock: 'projects', label: 'Projects Lab', x: mapWidth * 0.84, y: mapHeight * 0.18, targetX: mapWidth * 0.84, targetY: mapHeight * 0.18 },  // Northeast corner
+      { id: 'blogDoor', requiredUnlock: 'blog', label: 'Blog Library', x: mapWidth * 0.84, y: mapHeight * 0.80, targetX: mapWidth * 0.84, targetY: mapHeight * 0.80 },      // Southeast corner
+      { id: 'contactDoor', requiredUnlock: 'contact', label: 'Contact Office', x: mapWidth * 0.10, y: mapHeight * 0.80, targetX: mapWidth * 0.10, targetY: mapHeight * 0.80 },  // Southwest corner
     ];
 
     defaultDoors.forEach((doorInfo) => {
-      const isUnlocked = SaveSystem.isZoneUnlocked(doorInfo.requiredUnlock);
-      const doorRect = this.add.rectangle(doorInfo.x, doorInfo.y, 64, 64, isUnlocked ? 0x00ff00 : 0xff6600, 0.5);
-      doorRect.setStrokeStyle(2, isUnlocked ? 0x00aa00 : 0xaa4400);
-
-      const doorLabel = this.add.text(doorInfo.x, doorInfo.y - 40, doorInfo.label, {
-        fontSize: '12px',
-        fontFamily: 'Courier New',
-        color: '#ffffff',
-        backgroundColor: '#000000',
-        padding: { x: 4, y: 2 },
-      });
-      doorLabel.setOrigin(0.5, 1);
-
       const doorData: DoorData = {
         id: doorInfo.id,
         requiredUnlock: doorInfo.requiredUnlock,
@@ -419,19 +491,85 @@ export default class WorldScene extends Phaser.Scene {
         targetY: doorInfo.targetY,
         label: doorInfo.label,
       };
+      
+      // Create building that acts as the door
+      this.createBuilding(
+        doorInfo.x,
+        doorInfo.y,
+        this.getBuildingSpriteKey(doorInfo.requiredUnlock),
+        doorInfo.id,
+        doorData
+      );
+    });
+  }
 
-      this.doors.set(doorInfo.id, { sprite: doorRect, data: doorData });
 
+
+  private createBuilding(x: number, y: number, spriteKey: string, doorId: string, doorData?: DoorData): void {
+    // Building is 64x80, position so bottom aligns with y, centered at x
+    const building = this.add.sprite(x, y, spriteKey);
+    building.setOrigin(0.5, 1); // Center horizontally, bottom aligned
+    
+    // Make building a physics body for collision
+    this.physics.add.existing(building, true); // true = static body
+    const body = building.body as Phaser.Physics.Arcade.StaticBody;
+    // Adjust body size to match sprite better (slightly smaller than sprite for better feel)
+    body.setSize(60, 78);
+    body.setOffset(2, 2);
+    
+    // Set depth so building appears behind player but above ground
+    building.setDepth(100);
+    
+    // Add collision with player immediately
+    this.physics.add.collider(this.player, building);
+    
+    this.buildings.set(doorId, { sprite: building, body: body });
+    
+    // If this building has door data, make it interactable
+    if (doorData) {
+      // Add label above building
+      const isUnlocked = SaveSystem.isZoneUnlocked(doorData.requiredUnlock);
+      const labelText = `${doorData.label}${!isUnlocked ? ' (Locked)' : ''}`;
+      const label = this.add.text(x, y - 90, labelText, {
+        fontSize: '12px',
+        fontFamily: 'Courier New',
+        color: isUnlocked ? '#ffffff' : '#ff6600',
+        backgroundColor: '#000000',
+        padding: { x: 4, y: 2 },
+      });
+      label.setOrigin(0.5, 1);
+      label.setDepth(300);
+      
+      // Store door data with building reference
+      this.doors.set(doorId, { building: building, data: doorData, label: label });
+      
+      // Make building interactable - interaction area covers the front/bottom part of building
       this.interactionSystem.addInteractable({
-        id: doorInfo.id,
-        x: doorInfo.x - 32,
-        y: doorInfo.y - 32,
+        id: doorId,
+        x: x - 32, // Building is 64 wide, so -32 to +32 covers it
+        y: y - 40, // Front part of building (where door would be)
         width: 64,
-        height: 64,
+        height: 40,
         type: 'door',
         data: doorData,
       });
-    });
+      
+      // Update building appearance based on unlock status
+      if (!isUnlocked) {
+        // Make locked buildings slightly darker
+        building.setTint(0x888888);
+      }
+    }
+  }
+
+  private getBuildingSpriteKey(roomType: string): string {
+    const spriteMap: Record<string, string> = {
+      'about': 'building_about',
+      'projects': 'building_projects',
+      'blog': 'building_blog',
+      'contact': 'building_contact',
+    };
+    return spriteMap[roomType] || 'building';
   }
 
   update(): void {
@@ -440,30 +578,19 @@ export default class WorldScene extends Phaser.Scene {
       // Pause player movement when dialog is visible
       this.player.setVelocity(0, 0);
       
-      // Advance dialog on any key press (except ESC which closes it)
-      // Check E, Space, and also check if any key was just pressed
-      if (Phaser.Input.Keyboard.JustDown(this.interactKey) || 
-          Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
-        this.dialogUI.advance();
-      } else {
-        // Check for any other key being pressed (for "any key" functionality)
-        const enterKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
-        if (Phaser.Input.Keyboard.JustDown(enterKey)) {
-          this.dialogUI.advance();
-        }
-        // Also check arrow keys and WASD for dialog advancement
-        if (Phaser.Input.Keyboard.JustDown(this.cursors.up) ||
-            Phaser.Input.Keyboard.JustDown(this.cursors.down) ||
-            Phaser.Input.Keyboard.JustDown(this.cursors.left) ||
-            Phaser.Input.Keyboard.JustDown(this.cursors.right) ||
-            Phaser.Input.Keyboard.JustDown(this.wasdKeys.W) ||
-            Phaser.Input.Keyboard.JustDown(this.wasdKeys.A) ||
-            Phaser.Input.Keyboard.JustDown(this.wasdKeys.S) ||
-            Phaser.Input.Keyboard.JustDown(this.wasdKeys.D)) {
-          this.dialogUI.advance();
-        }
+      // Activate global key handler if not already active
+      if (this.dialogKeyHandler && !this.dialogKeyHandlerActive) {
+        document.addEventListener('keydown', this.dialogKeyHandler);
+        this.dialogKeyHandlerActive = true;
       }
+      
       return;
+    } else {
+      // Remove global key handler when dialog is not visible
+      if (this.dialogKeyHandler && this.dialogKeyHandlerActive) {
+        document.removeEventListener('keydown', this.dialogKeyHandler);
+        this.dialogKeyHandlerActive = false;
+      }
     }
 
     if (this.contentOverlay.isOverlayVisible()) {
@@ -474,7 +601,7 @@ export default class WorldScene extends Phaser.Scene {
     }
 
     // Handle player movement
-    const speed = 200;
+    const speed = 320; // Increased from 200 for faster movement
     let velocityX = 0;
     let velocityY = 0;
 
@@ -492,11 +619,29 @@ export default class WorldScene extends Phaser.Scene {
 
     this.player.setVelocity(velocityX, velocityY);
 
+    // World wrapping: wrap player position if they go beyond map boundaries
+    const mapWidth = this.map ? this.map.widthInPixels : 1024;
+    const mapHeight = this.map ? this.map.heightInPixels : 1024;
+    
+    // Wrap horizontally (left/right)
+    if (this.player.x < 0) {
+      this.player.setX(mapWidth);
+    } else if (this.player.x > mapWidth) {
+      this.player.setX(0);
+    }
+    
+    // Wrap vertically (top/bottom)
+    if (this.player.y < 0) {
+      this.player.setY(mapHeight);
+    } else if (this.player.y > mapHeight) {
+      this.player.setY(0);
+    }
+
     // Handle interaction when not in dialog/overlay
     if (Phaser.Input.Keyboard.JustDown(this.interactKey) || Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
       this.handleInteraction();
     }
-
+    
     // Auto-save player position periodically
     if (this.time.now % 5000 < 16) { // Every ~5 seconds
       this.savePlayerPosition();
@@ -513,26 +658,60 @@ export default class WorldScene extends Phaser.Scene {
       const hasUnlocked = SaveSystem.isZoneUnlocked(
         npcData.id === 'guide' ? 'about' :
         npcData.id === 'engineer' ? 'projects' :
-        npcData.id === 'writer' ? 'blog' : ''
+        npcData.id === 'writer' ? 'blog' :
+        npcData.id === 'contact' ? 'contact' : ''
       );
       
       const dialog = getDialog(npcData.dialogId, hasUnlocked);
-      this.dialogUI.showDialog(dialog);
+      
+      // Callback to update door appearances after dialog completes if zone was unlocked
+      const onDialogComplete = () => {
+        if (dialog.unlocksZone) {
+          // Update all door appearances in case any were unlocked
+          this.doors.forEach((_door, doorId) => {
+            this.updateDoorAppearance(doorId);
+          });
+        }
+      };
+      
+      this.dialogUI.showDialog(dialog, onDialogComplete);
     } else if (nearest.type === 'door') {
       const doorData = nearest.data as DoorData;
       const isUnlocked = SaveSystem.isZoneUnlocked(doorData.requiredUnlock);
       
       if (isUnlocked) {
+        // Teleport player into the room (fade transition)
         this.teleportPlayer(doorData.targetX, doorData.targetY, doorData.requiredUnlock);
       } else {
-        // Show message
+        // Show locked door message
         this.dialogUI.showDialog({
           id: 'locked',
           lines: [
-            { speaker: 'System', text: `The ${doorData.label} is locked. Talk to NPCs to unlock new areas!` },
+            { speaker: 'System', text: `The ${doorData.label} is locked.` },
+            { speaker: 'System', text: 'Talk to NPCs to unlock new areas!' },
           ],
         });
       }
+    }
+  }
+
+  private updateDoorAppearance(doorId: string): void {
+    const door = this.doors.get(doorId);
+    if (!door) return;
+    
+    const isUnlocked = SaveSystem.isZoneUnlocked(door.data.requiredUnlock);
+    
+    // Update label
+    const labelText = `${door.data.label}${!isUnlocked ? ' (Locked)' : ''}`;
+    door.label.setText(labelText);
+    door.label.setColor(isUnlocked ? '#ffffff' : '#ff6600');
+    
+    // Update building appearance
+    const building = door.building;
+    if (isUnlocked) {
+      building.clearTint(); // Remove tint if unlocked
+    } else {
+      building.setTint(0x888888); // Darken if locked
     }
   }
 
@@ -546,7 +725,7 @@ export default class WorldScene extends Phaser.Scene {
       this.savePlayerPosition();
       
       // Show content overlay for zones
-      if (zone === 'about' || zone === 'projects' || zone === 'blog') {
+      if (zone === 'about' || zone === 'projects' || zone === 'blog' || zone === 'contact') {
         this.contentOverlay.show(zone as ContentType);
       }
       

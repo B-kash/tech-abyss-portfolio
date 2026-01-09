@@ -1,12 +1,18 @@
-export type ContentType = 'about' | 'projects' | 'blog';
+export type ContentType = 'about' | 'projects' | 'blog' | 'contact';
 
 export class ContentOverlay {
   private modal: HTMLElement;
   private modalTitle: HTMLElement;
   private modalBody: HTMLElement;
   private modalClose: HTMLElement;
+  private modalFooter: HTMLElement;
   private isVisible = false;
   private escapeHandler?: (event: KeyboardEvent) => void;
+  private clickHandler?: () => void;
+  private typewriterInterval?: number;
+  private fullContent: string = '';
+  private currentIndex: number = 0;
+  private isTyping: boolean = false;
 
   constructor() {
     // Get DOM elements
@@ -14,6 +20,7 @@ export class ContentOverlay {
     this.modalTitle = document.getElementById('modal-title')!;
     this.modalBody = document.getElementById('modal-body')!;
     this.modalClose = document.getElementById('modal-close')!;
+    this.modalFooter = document.getElementById('modal-footer')!;
 
     // Setup close button handler
     this.modalClose.addEventListener('click', () => {
@@ -33,22 +40,47 @@ export class ContentOverlay {
 
     this.isVisible = true;
     this.modalTitle.textContent = this.getTitle(type);
-    this.modalBody.innerHTML = 'Loading...';
+    this.modalBody.innerHTML = '';
     
     // Show modal
     this.modal.classList.add('show');
 
-    // Load and display content
-    const content = await this.loadContent(type);
-    this.modalBody.innerHTML = this.formatContent(type, content);
+    // Load and format content
+    const rawContent = await this.loadContent(type);
+    this.fullContent = this.formatContent(type, rawContent);
+    this.currentIndex = 0;
+    this.isTyping = true;
 
-    // Setup ESC key handler
+    // Start typewriter effect
+    this.startTypewriter();
+
+    // Setup key handlers
     this.escapeHandler = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && this.isVisible) {
-        this.hide();
+        if (this.isTyping) {
+          // Finish typing immediately
+          this.finishTypewriter();
+        } else {
+          this.hide();
+        }
+      } else if ((event.key === 'Enter' || event.key === ' ' || event.code === 'Space') && this.isTyping) {
+        // Skip typewriter on Enter/Space
+        event.preventDefault();
+        this.finishTypewriter();
       }
     };
     document.addEventListener('keydown', this.escapeHandler);
+
+    // Allow clicking to skip typewriter
+    this.clickHandler = () => {
+      if (this.isTyping) {
+        this.finishTypewriter();
+      }
+    };
+    this.modalBody.addEventListener('click', this.clickHandler);
+    
+    // Update footer hint when typing starts
+    this.modalFooter.textContent = 'Click or press Space/Enter to skip | ESC to close';
   }
 
   hide(): void {
@@ -57,11 +89,70 @@ export class ContentOverlay {
     this.isVisible = false;
     this.modal.classList.remove('show');
 
-    // Remove ESC handler
+    // Stop typewriter if running
+    this.stopTypewriter();
+
+    // Remove handlers
     if (this.escapeHandler) {
       document.removeEventListener('keydown', this.escapeHandler);
       this.escapeHandler = undefined;
     }
+    if (this.clickHandler) {
+      this.modalBody.removeEventListener('click', this.clickHandler);
+      this.clickHandler = undefined;
+    }
+  }
+
+  private startTypewriter(): void {
+    this.stopTypewriter(); // Clear any existing interval
+    
+    const speed = 15; // milliseconds per character
+    
+    this.typewriterInterval = window.setInterval(() => {
+      if (this.currentIndex < this.fullContent.length) {
+        // Handle HTML tags - skip to end of tag immediately
+        if (this.fullContent[this.currentIndex] === '<') {
+          const tagEnd = this.fullContent.indexOf('>', this.currentIndex);
+          if (tagEnd !== -1) {
+            // Skip entire tag at once
+            this.currentIndex = tagEnd + 1;
+            this.modalBody.innerHTML = this.fullContent.substring(0, this.currentIndex);
+          } else {
+            // Malformed tag, just show the character
+            this.currentIndex++;
+            this.modalBody.innerHTML = this.fullContent.substring(0, this.currentIndex);
+          }
+        } else {
+          // Regular character
+          this.currentIndex++;
+          this.modalBody.innerHTML = this.fullContent.substring(0, this.currentIndex);
+        }
+        
+        // Auto-scroll to bottom as content is typed
+        this.modalBody.scrollTop = this.modalBody.scrollHeight;
+      } else {
+        // Finished typing
+        this.finishTypewriter();
+      }
+    }, speed);
+  }
+
+  private finishTypewriter(): void {
+    this.stopTypewriter();
+    this.modalBody.innerHTML = this.fullContent;
+    this.currentIndex = this.fullContent.length;
+    this.isTyping = false;
+    this.modalBody.scrollTop = 0; // Reset scroll position after finishing
+    // Update footer hint when typing is complete
+    this.modalFooter.textContent = 'Press ESC to close';
+  }
+
+  private stopTypewriter(): void {
+    if (this.typewriterInterval !== undefined) {
+      clearInterval(this.typewriterInterval);
+      this.typewriterInterval = undefined;
+    }
+    this.isTyping = false;
   }
 
   isOverlayVisible(): boolean {
@@ -94,6 +185,14 @@ export class ContentOverlay {
           }
           return this.getDefaultBlog();
 
+        case 'contact':
+          const contactRes = await fetch('/content/contact.json');
+          if (contactRes.ok) {
+            const contact = await contactRes.json();
+            return JSON.stringify(contact, null, 2);
+          }
+          return this.getDefaultContact();
+
         default:
           return 'Content not found.';
       }
@@ -120,6 +219,14 @@ export class ContentOverlay {
       try {
         const blog = JSON.parse(content);
         return this.formatBlog(blog);
+      } catch (e) {
+        return '<pre>' + this.escapeHtml(content) + '</pre>';
+      }
+    } else if (type === 'contact') {
+      // Parse and format JSON contact info
+      try {
+        const contact = JSON.parse(content);
+        return this.formatContact(contact);
       } catch (e) {
         return '<pre>' + this.escapeHtml(content) + '</pre>';
       }
@@ -221,11 +328,60 @@ export class ContentOverlay {
     return div.innerHTML;
   }
 
+  private formatContact(contact: any): string {
+    let html = '<div>';
+    
+    if (contact.email) {
+      html += `<div style="margin-bottom: 20px;">`;
+      html += `<h3>Email</h3>`;
+      html += `<p><a href="mailto:${this.escapeHtml(contact.email)}">${this.escapeHtml(contact.email)}</a></p>`;
+      html += `</div>`;
+    }
+    
+    if (contact.social && Object.keys(contact.social).length > 0) {
+      html += `<div style="margin-bottom: 20px;">`;
+      html += `<h3>Social Media</h3>`;
+      html += `<ul style="list-style: none; padding: 0;">`;
+      for (const [platform, url] of Object.entries(contact.social)) {
+        html += `<li style="margin-bottom: 10px;">`;
+        html += `<strong>${this.escapeHtml(platform)}:</strong> `;
+        html += `<a href="${this.escapeHtml(url as string)}" target="_blank">${this.escapeHtml(url as string)}</a>`;
+        html += `</li>`;
+      }
+      html += `</ul>`;
+      html += `</div>`;
+    }
+    
+    if (contact.github) {
+      html += `<div style="margin-bottom: 20px;">`;
+      html += `<h3>GitHub</h3>`;
+      html += `<p><a href="${this.escapeHtml(contact.github)}" target="_blank">${this.escapeHtml(contact.github)}</a></p>`;
+      html += `</div>`;
+    }
+    
+    if (contact.linkedin) {
+      html += `<div style="margin-bottom: 20px;">`;
+      html += `<h3>LinkedIn</h3>`;
+      html += `<p><a href="${this.escapeHtml(contact.linkedin)}" target="_blank">${this.escapeHtml(contact.linkedin)}</a></p>`;
+      html += `</div>`;
+    }
+    
+    if (contact.message) {
+      html += `<div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #16213e;">`;
+      html += `<p>${this.escapeHtml(contact.message)}</p>`;
+      html += `</div>`;
+    }
+    
+    html += '</div>';
+    return html;
+  }
+
   private getTitle(type: ContentType): string {
-    const titles = {
+    const titles: Record<ContentType, string> = {
       about: 'About Me',
       projects: 'Projects',
       blog: 'Blog',
+      contact: 'Contact',
     };
     return titles[type];
   }
@@ -269,6 +425,18 @@ Explore the world, talk to NPCs, and discover more about my work!`;
           excerpt: 'How to create engaging portfolio experiences...',
         },
       ],
+    }, null, 2);
+  }
+
+  private getDefaultContact(): string {
+    return JSON.stringify({
+      email: 'your.email@example.com',
+      github: 'https://github.com/yourusername',
+      linkedin: 'https://linkedin.com/in/yourprofile',
+      social: {
+        Twitter: 'https://twitter.com/yourhandle',
+      },
+      message: 'Feel free to reach out if you have any questions, collaboration opportunities, or just want to connect!',
     }, null, 2);
   }
 }

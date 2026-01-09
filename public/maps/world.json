@@ -1,17 +1,17 @@
 {
   "compressionlevel": -1,
-  "height": 125,
+  "height": 64,
   "infinite": false,
   "layers": [
     {
       "data": [],
-      "height": 125,
+      "height": 64,
       "id": 1,
       "name": "Ground",
       "opacity": 1,
       "type": "tilelayer",
       "visible": true,
-      "width": 125,
+      "width": 64,
       "x": 0,
       "y": 0
     },
@@ -20,39 +20,6 @@
       "id": 2,
       "name": "Collisions",
       "objects": [
-        {
-          "height": 100,
-          "id": 1,
-          "name": "Wall1",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 100,
-          "x": 500,
-          "y": 500
-        },
-        {
-          "height": 100,
-          "id": 2,
-          "name": "Wall2",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 150,
-          "x": 1000,
-          "y": 800
-        },
-        {
-          "height": 200,
-          "id": 3,
-          "name": "Wall3",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 100,
-          "x": 1500,
-          "y": 400
-        }
       ],
       "opacity": 1,
       "type": "objectgroup",
@@ -90,8 +57,8 @@
           "type": "",
           "visible": true,
           "width": 32,
-          "x": 400,
-          "y": 432
+          "x": 580,
+          "y": 480
         },
         {
           "height": 32,
@@ -118,8 +85,8 @@
           "type": "",
           "visible": true,
           "width": 32,
-          "x": 1200,
-          "y": 832
+          "x": 900,
+          "y": 350
         },
         {
           "height": 32,
@@ -146,8 +113,36 @@
           "type": "",
           "visible": true,
           "width": 32,
-          "x": 1600,
-          "y": 1232
+          "x": 350,
+          "y": 900
+        },
+        {
+          "height": 32,
+          "id": 10,
+          "name": "Contact",
+          "properties": [
+            {
+              "name": "id",
+              "type": "string",
+              "value": "contact"
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "value": "Contact"
+            },
+            {
+              "name": "dialogId",
+              "type": "string",
+              "value": "contact"
+            }
+          ],
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 32,
+          "x": 100,
+          "y": 650
         }
       ],
       "opacity": 1,
@@ -179,12 +174,12 @@
             {
               "name": "targetX",
               "type": "int",
-              "value": 800
+              "value": 180
             },
             {
               "name": "targetY",
               "type": "int",
-              "value": 600
+              "value": 180
             },
             {
               "name": "label",
@@ -196,8 +191,8 @@
           "type": "",
           "visible": true,
           "width": 64,
-          "x": 568,
-          "y": 400
+          "x": 180,
+          "y": 180
         },
         {
           "height": 64,
@@ -217,12 +212,12 @@
             {
               "name": "targetX",
               "type": "int",
-              "value": 1200
+              "value": 860
             },
             {
               "name": "targetY",
               "type": "int",
-              "value": 900
+              "value": 180
             },
             {
               "name": "label",
@@ -234,8 +229,8 @@
           "type": "",
           "visible": true,
           "width": 64,
-          "x": 1368,
-          "y": 600
+          "x": 860,
+          "y": 180
         },
         {
           "height": 64,
@@ -255,12 +250,12 @@
             {
               "name": "targetX",
               "type": "int",
-              "value": 1700
+              "value": 860
             },
             {
               "name": "targetY",
               "type": "int",
-              "value": 1600
+              "value": 820
             },
             {
               "name": "label",
@@ -272,8 +267,46 @@
           "type": "",
           "visible": true,
           "width": 64,
-          "x": 1768,
-          "y": 1400
+          "x": 860,
+          "y": 820
+        },
+        {
+          "height": 64,
+          "id": 11,
+          "name": "ContactDoor",
+          "properties": [
+            {
+              "name": "id",
+              "type": "string",
+              "value": "contactDoor"
+            },
+            {
+              "name": "requiredUnlock",
+              "type": "string",
+              "value": "contact"
+            },
+            {
+              "name": "targetX",
+              "type": "int",
+              "value": 100
+            },
+            {
+              "name": "targetY",
+              "type": "int",
+              "value": 820
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "value": "Contact Office"
+            }
+          ],
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 64,
+          "x": 100,
+          "y": 820
         }
       ],
       "opacity": 1,
@@ -284,7 +317,7 @@
     }
   ],
   "nextlayerid": 5,
-  "nextobjectid": 10,
+  "nextobjectid": 12,
   "orientation": "orthogonal",
   "renderorder": "right-down",
   "tiledversion": "1.10.2",
@@ -298,5 +331,5 @@
   "tilewidth": 16,
   "type": "map",
   "version": "1.10",
-  "width": 125
+  "width": 64
 }

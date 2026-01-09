@@ -21,67 +21,79 @@ export class DialogUI {
   }
 
   private createUI(): void {
-    const width = this.scene.scale.width;
-    const height = 280;
-    const y = this.scene.scale.height - height / 2;
+    // Use game scale dimensions (screen/viewport size) for fixed positioning
+    const screenWidth = this.scene.scale.width;
+    const screenHeight = this.scene.scale.height;
+    const dialogHeight = 210;
+    
+    // Calculate dialog width - ensure it doesn't exceed screen width
+    // Use min to ensure it fits on small screens, with padding
+    const maxDialogWidth = Math.min(screenWidth * 0.9, 900);
+    const dialogWidth = Math.max(400, Math.min(maxDialogWidth, screenWidth - 40)); // Min 400px, max with 20px padding on each side
+    
+    // Center the dialog horizontally and position near bottom
+    const centerX = screenWidth / 2;
+    const dialogY = screenHeight - dialogHeight / 2 - 20; // 20px from bottom
 
-    this.container = this.scene.add.container(0, 0);
+    this.container = this.scene.add.container(centerX, dialogY);
     this.container.setVisible(false);
-    this.container.setDepth(1000);
+    this.container.setDepth(10000); // Very high depth to ensure it's on top
+    // Make container fixed to camera (not scrolling with world)
+    this.container.setScrollFactor(0, 0);
 
-    // Background
-    this.background = this.scene.add.rectangle(
-      width / 2,
-      y,
-      width * 0.9,
-      height,
-      0x000000,
-      0.8
-    );
+    // Background - positioned relative to container
+    this.background = this.scene.add.rectangle(0, 0, dialogWidth, dialogHeight, 0x000000, 0.8);
     this.background.setStrokeStyle(2, 0xffffff);
+    this.background.setScrollFactor(0, 0); // Fixed to camera
+    this.background.setOrigin(0.5, 0.5);
 
     // Name label (above the dialog box)
-    this.nameText = this.scene.add.text(width / 2, y - height / 2 - 30, '', {
+    this.nameText = this.scene.add.text(0, -dialogHeight / 2 - 30, '', {
       fontSize: '24px',
       fontFamily: 'Courier New',
       color: '#ffff00',
       align: 'center',
     });
     this.nameText.setOrigin(0.5);
+    this.nameText.setScrollFactor(0, 0); // Fixed to camera
 
     // Dialog text area - positioned to leave room for hint at bottom
-    // Start position: slightly below the top of the box
-    const dialogStartY = y - height / 2 + 25;
-    // Calculate max lines based on available space
-    // Font size 16px + line spacing 4px = ~20px per line
-    // Available height: height - 70px (for hint, padding, and name label space)
-    const availableHeight = height - 70;
+    const dialogStartY = -dialogHeight / 2 + 25;
+    // Calculate max lines based on available space (leave more room for hint)
+    const availableHeight = dialogHeight - 80; // Increased from 70 to 80 for better spacing
     const maxLines = Math.floor(availableHeight / 20);
     
-    this.dialogText = this.scene.add.text(width / 2, dialogStartY, '', {
+    // Calculate text width with padding
+    const textWidth = dialogWidth * 0.85;
+    
+    this.dialogText = this.scene.add.text(0, dialogStartY, '', {
       fontSize: '16px',
       fontFamily: 'Courier New',
       color: '#ffffff',
-      wordWrap: { width: width * 0.85 },
+      wordWrap: { width: textWidth },
       align: 'left',
       lineSpacing: 4,
-      maxLines: maxLines, // Dynamically calculate max lines
+      maxLines: maxLines,
     });
     this.dialogText.setOrigin(0.5, 0);
-    // Ensure word wrapping is enabled
-    this.dialogText.setWordWrapWidth(width * 0.85);
+    this.dialogText.setScrollFactor(0, 0); // Fixed to camera
+    this.dialogText.setWordWrapWidth(textWidth);
 
-    // Hint text - positioned at bottom of dialog box with padding
-    this.hintText = this.scene.add.text(width / 2, y + height / 2 - 20, 'Press E, Space, or any key to continue | ESC to close', {
+    // Hint text - positioned at bottom of dialog box, ensure it's visible
+    const hintY = dialogHeight / 2 - 25; // Position with more spacing from bottom
+    this.hintText = this.scene.add.text(0, hintY, 'Press any key to continue...', {
       fontSize: '14px',
       fontFamily: 'Courier New',
-      color: '#aaaaaa',
+      color: '#00ffff',
       align: 'center',
       fontStyle: 'italic',
       backgroundColor: '#000000',
-      padding: { x: 8, y: 4 },
+      padding: { x: 10, y: 6 },
+      wordWrap: { width: dialogWidth - 40 }, // Ensure hint text wraps if needed
     });
     this.hintText.setOrigin(0.5);
+    this.hintText.setScrollFactor(0, 0); // Fixed to camera
+    this.hintText.setDepth(10001); // Ensure hint is on top
 
     this.container.add([this.background, this.nameText, this.dialogText, this.hintText]);
   }
@@ -159,15 +171,16 @@ export class DialogUI {
   advance(): void {
     if (!this.currentDialog || !this.isVisible) return;
 
-    // If typewriter is still running, skip it
+    // If typewriter is still running, skip it and show full text immediately
     if (this.typewriterTimer) {
       const currentLine = this.currentDialog.lines[this.currentLineIndex];
       this.dialogText.setText(currentLine.text);
       this.typewriterTimer.destroy();
       this.typewriterTimer = undefined;
-      return;
+      return; // Don't advance to next line yet - wait for next key press
     }
 
+    // Typewriter finished, advance to next line
     this.currentLineIndex++;
     if (this.currentLineIndex >= this.currentDialog.lines.length) {
       this.hide();
