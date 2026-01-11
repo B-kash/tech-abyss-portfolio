@@ -294,6 +294,9 @@ export class ContentOverlay {
       if (project.link) {
         html += `<p><strong>Link:</strong> <a href="${this.escapeHtml(project.link)}" target="_blank">${this.escapeHtml(project.link)}</a></p>`;
       }
+      if (project.try_now) {
+        html += `<p><strong>Try Now:</strong> <a href="${this.escapeHtml(project.try_now)}" target="_blank">${this.escapeHtml(project.try_now)}</a></p>`;
+      }
       html += `</div>`;
     });
     html += '</div>';
