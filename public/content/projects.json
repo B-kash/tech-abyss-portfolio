@@ -6,22 +6,11 @@
     "link": "https://github.com/b-kash/tech-abyss-portfolio"
   },
   {
-    "title": "Video Subtitles",
-    "description": "A TypeScript-based application for managing and working with video subtitles. Features subtitle editing, synchronization, and export functionality.",
-    "tech": ["TypeScript", "Video Processing"],
-    "link": "https://github.com/b-kash/video-subtitles"
-  },
-  {
-    "title": "Music Master",
-    "description": "A TypeScript application for music management and audio processing. Create, organize, and manage your music library with advanced features.",
-    "tech": ["TypeScript", "Audio Processing"],
-    "link": "https://github.com/b-kash/music-master"
-  },
-  {
     "title": "Speech to Text",
     "description": "A speech recognition application that converts spoken words into text. Features real-time transcription, multiple language support, and audio processing capabilities.",
     "tech": ["TypeScript", "Speech Recognition", "Web APIs"],
-    "link": "https://github.com/b-kash/speech-to-text"
+    "link": "https://github.com/b-kash/speech-to-text",
+    "try_now": "https://stt.tech-abyss.com"
   },
   {
     "title": "Text to QR",
