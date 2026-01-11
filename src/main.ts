@@ -1,7 +1,9 @@
 import Phaser from 'phaser';
 import BootScene from './scenes/BootScene';
 import WorldScene from './scenes/WorldScene';
+import { inject } from "@vercel/analytics";
 
+inject();
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
   width: 1200,
