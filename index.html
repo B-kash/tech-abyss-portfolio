@@ -3,209 +3,222 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tech Abyss - Portfolio Game</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      overflow: hidden;
-      background: #000;
-      font-family: 'Courier New', monospace;
-    }
-    #game-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100vw;
-      height: 100vh;
-    }
-    
-    /* Content Modal Styles */
-    #content-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 10000;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(4px);
-      justify-content: center;
-      align-items: center;
-      animation: fadeIn 0.3s ease-out;
-    }
-    
-    #content-modal.show {
-      display: flex;
-    }
-    
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
+  <meta name="description" content="Bikash Chapagain - Full-stack Software Developer and Systems Consultant based in Leuven, Belgium. Expert in TypeScript, Node.js, React, and scalable backend systems. Available for consulting and development projects in Flanders, Belgium.">
+  <meta name="keywords" content="software developer, full-stack developer, TypeScript developer, Node.js developer, React developer, Belgium developer, Leuven developer, Flanders developer, systems consultant, backend developer, frontend developer, JavaScript developer, software engineer, Belgium">
+  <meta name="author" content="Bikash Chapagain">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://tech-abyss.com">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tech-abyss.com">
+  <meta property="og:title" content="Bikash Chapagain - Full-Stack Software Developer | Leuven, Belgium">
+  <meta property="og:description" content="Full-stack Software Developer and Systems Consultant based in Leuven, Belgium. Expert in TypeScript, Node.js, React, and scalable backend systems.">
+  <meta property="og:site_name" content="The Abyss Systems Consultant">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://tech-abyss.com">
+  <meta name="twitter:title" content="Bikash Chapagain - Full-Stack Software Developer | Leuven, Belgium">
+  <meta name="twitter:description" content="Full-stack Software Developer and Systems Consultant based in Leuven, Belgium. Expert in TypeScript, Node.js, React, and scalable backend systems.">
+  
+  <title>Bikash Chapagain - Full-Stack Software Developer & Systems Consultant | Leuven, Belgium</title>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Bikash Chapagain",
+    "jobTitle": "Full-Stack Software Developer & Systems Consultant",
+    "url": "https://tech-abyss.com",
+    "sameAs": [
+      "https://github.com/b-kash",
+      "https://linkedin.com/in/b-kash"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Leuven",
+      "addressRegion": "Flanders",
+      "addressCountry": "BE"
+    },
+    "email": "hello@tech-abyss.com",
+    "knowsAbout": [
+      "TypeScript",
+      "JavaScript",
+      "Node.js",
+      "React",
+      "Angular",
+      "Vue.js",
+      "Golang",
+      "Java",
+      "Full-Stack Development",
+      "Backend Development",
+      "Frontend Development",
+      "Systems Architecture",
+      "Software Engineering"
+    ],
+    "alumniOf": [
+      {
+        "@type": "Organization",
+        "name": "Volkswagen D'Ieteren Finance"
+      },
+      {
+        "@type": "Organization",
+        "name": "MyWay Pro"
+      },
+      {
+        "@type": "Organization",
+        "name": "Sinch Belgium"
+      },
+      {
+        "@type": "Organization",
+        "name": "THEO Technologies NV"
       }
-      to {
-        opacity: 1;
-      }
-    }
-    
-    .modal-content {
-      background: #1a1a2e;
-      border: 3px solid #16213e;
-      border-radius: 8px;
-      width: 85%;
-      max-width: 900px;
-      max-height: 85vh;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-      animation: slideUp 0.3s ease-out;
-    }
-    
-    @keyframes slideUp {
-      from {
-        transform: translateY(20px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-    
-    .modal-header {
-      padding: 20px 30px;
-      border-bottom: 2px solid #16213e;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .modal-title {
-      color: #00ffff;
-      font-size: 28px;
-      font-weight: bold;
-    }
-    
-    .modal-close {
-      background: transparent;
-      border: 2px solid #00ffff;
-      color: #00ffff;
-      font-size: 24px;
-      width: 36px;
-      height: 36px;
-      border-radius: 4px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-      font-family: 'Courier New', monospace;
-    }
-    
-    .modal-close:hover {
-      background: #00ffff;
-      color: #1a1a2e;
-    }
-    
-    .modal-body {
-      padding: 30px;
-      overflow-y: auto;
-      flex: 1;
-      color: #ffffff;
-      font-size: 16px;
-      line-height: 1.8;
-    }
-    
-    .modal-body::-webkit-scrollbar {
-      width: 10px;
-    }
-    
-    .modal-body::-webkit-scrollbar-track {
-      background: #16213e;
-      border-radius: 5px;
-    }
-    
-    .modal-body::-webkit-scrollbar-thumb {
-      background: #00ffff;
-      border-radius: 5px;
-    }
-    
-    .modal-body::-webkit-scrollbar-thumb:hover {
-      background: #00cccc;
-    }
-    
-    .modal-body pre {
-      background: #16213e;
-      padding: 15px;
-      border-radius: 4px;
-      overflow-x: auto;
-      margin: 10px 0;
-    }
-    
-    .modal-body code {
-      background: #16213e;
-      padding: 2px 6px;
-      border-radius: 3px;
-      font-family: 'Courier New', monospace;
-    }
-    
-    .modal-body h1, .modal-body h2, .modal-body h3 {
-      color: #00ffff;
-      margin-top: 20px;
-      margin-bottom: 10px;
-    }
-    
-    .modal-body ul, .modal-body ol {
-      margin-left: 20px;
-      margin-bottom: 15px;
-    }
-    
-    .modal-body li {
-      margin-bottom: 8px;
-    }
-    
-    .modal-body a {
-      color: #00ffff;
-      text-decoration: underline;
-    }
-    
-    .modal-body a:hover {
-      color: #00cccc;
-    }
-    
-    .modal-footer {
-      padding: 15px 30px;
-      border-top: 2px solid #16213e;
-      text-align: center;
-      color: #888888;
-      font-size: 14px;
-      font-style: italic;
-    }
-  </style>
+    ]
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "The Abyss Systems Consultant",
+    "description": "Full-stack software development and systems consulting services",
+    "url": "https://tech-abyss.com",
+    "areaServed": {
+      "@type": "Country",
+      "name": "Belgium"
+    },
+    "serviceType": [
+      "Software Development",
+      "Systems Consulting",
+      "Full-Stack Development",
+      "Backend Development",
+      "Frontend Development"
+    ]
+  }
+  </script>
 </head>
 <body>
-  <div id="game-container"></div>
-  
-  <!-- Content Modal -->
-  <div id="content-modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" id="modal-title">Content</h2>
-        <button class="modal-close" id="modal-close" aria-label="Close">×</button>
-      </div>
-      <div class="modal-body" id="modal-body">
-        Loading...
-      </div>
-      <div class="modal-footer" id="modal-footer">
-        Click or press Space/Enter to skip | ESC to close
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">The Abyss</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#what-i-do">What I Do</a></li>
+        <li><a href="#how-i-work">How I Work</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Solving Complex Systems Problems</h1>
+      <p class="hero-subtitle">Full-stack engineering and systems consulting focused on reliability, scalability, and clarity.</p>
+    </div>
+  </section>
+
+  <!-- What I Do Section -->
+  <section class="section" id="what-i-do">
+    <div class="container">
+      <h2 class="section-title">What I Do</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3 class="card-title">Systems Architecture</h3>
+          <p class="card-text">Design and implement scalable backend systems that handle real-world complexity with clarity and reliability.</p>
+        </div>
+        <div class="card">
+          <h3 class="card-title">Problem Solving</h3>
+          <p class="card-text">Approach business challenges through systems thinking, identifying root causes and building sustainable solutions.</p>
+        </div>
+        <div class="card">
+          <h3 class="card-title">Infrastructure & DevOps</h3>
+          <p class="card-text">Set up efficient development workflows, CI/CD pipelines, and cloud infrastructure optimized for cost and performance.</p>
+        </div>
+        <div class="card">
+          <h3 class="card-title">Full-Stack Development</h3>
+          <p class="card-text">Build complete applications from backend APIs to intuitive frontend interfaces, ensuring seamless integration.</p>
+        </div>
       </div>
     </div>
-  </div>
-  
+  </section>
+
+  <!-- How I Work Section -->
+  <section class="section section-alt" id="how-i-work">
+    <div class="container">
+      <h2 class="section-title">How I Work</h2>
+      <div class="process">
+        <div class="process-step">
+          <div class="process-number">01</div>
+          <h3 class="process-title">Understand</h3>
+          <p class="process-text">Deep dive into your business problems, constraints, and objectives. No assumptions, just clarity.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">02</div>
+          <h3 class="process-title">Design</h3>
+          <p class="process-text">Architect solutions that balance immediate needs with long-term scalability and maintainability.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">03</div>
+          <h3 class="process-title">Build</h3>
+          <p class="process-text">Implement with modern technologies, best practices, and clean code that stands the test of time.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">04</div>
+          <h3 class="process-title">Deliver</h3>
+          <p class="process-text">Ship solutions that solve real problems, with documentation and workflows that enable your team.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section class="section" id="projects">
+    <div class="container">
+      <h2 class="section-title">Projects & Case Studies</h2>
+      <div class="projects-grid" id="projects-grid">
+        <!-- Projects will be loaded dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="section section-alt" id="about">
+    <div class="container">
+      <h2 class="section-title">About</h2>
+      <div class="about-content" id="about-content">
+        <!-- About content will be loaded dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="section" id="contact">
+    <div class="container">
+      <h2 class="section-title">Contact</h2>
+      <div class="contact-content" id="contact-content">
+        <!-- Contact content will be loaded dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; <span id="current-year"></span> The Abyss Systems Consultant. All rights reserved.</p>
+    </div>
+  </footer>
+
   <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

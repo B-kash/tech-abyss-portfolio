@@ -1,11 +1,5 @@
 [
   {
-    "title": "Tech Abyss Portfolio",
-    "description": "An interactive 2D open-world portfolio website built as a playable game using Phaser 3. Explore the world, talk to NPCs, and discover content areas in this unique gaming portfolio experience.",
-    "tech": ["TypeScript", "Phaser 3", "Vite"],
-    "link": "https://github.com/b-kash/tech-abyss-portfolio"
-  },
-  {
     "title": "Speech to Text",
     "description": "A speech recognition application that converts spoken words into text. Features real-time transcription, multiple language support, and audio processing capabilities.",
     "tech": ["TypeScript", "Speech Recognition", "Web APIs"],
@@ -21,14 +15,14 @@
   },
   {
     "title": "HTML Fight",
-    "description": "An interactive HTML-based game or application. Experience web-based gameplay with HTML, CSS, and JavaScript creating engaging user interactions.",
+    "description": "An interactive web-based application demonstrating modern HTML, CSS, and JavaScript capabilities for creating engaging user interactions.",
     "tech": ["HTML", "CSS", "JavaScript"],
     "link": "https://github.com/b-kash/html-fight"
   },
   {
     "title": "Brick Breaker Remake",
-    "description": "A classic brick breaker game remake built with Java for Android. Learning android development through game development - a fun and educational project.",
-    "tech": ["Java", "Android", "Game Development"],
+    "description": "A classic game remake built with Java for Android, demonstrating mobile development principles and object-oriented design patterns.",
+    "tech": ["Java", "Android"],
     "link": "https://github.com/b-kash/brick-breaker-remake"
   }
 ]
