@@ -2,7 +2,7 @@
 
 I'm **Bikash Chapagain**, a fullStack software developer and systems consultant based in Leuven, Belgium. I work with organizations across Flanders and Belgium to solve complex technical challenges through clear thinking, reliable systems, and pragmatic solutions.
 
-I focus on building robust and maintainable systems across the full technology stack—from backend infrastructure to frontend interfaces. My approach centers on understanding problems deeply before architecting solutions that balance immediate needs with long-term scalability.
+I focus on building robust and maintainable systems across the full technology stack; from backend infrastructure to frontend interfaces. My approach centers on understanding problems deeply before architecting solutions that balance immediate needs with longterm scalability.
 
 **Technical Expertise:** JavaScript, TypeScript, Node.js, Golang, React, Angular, Vue.js, GCP, PostgreSQL, MongoDB, Redis, Kafka, and CI/CD optimization.
 
@@ -18,4 +18,4 @@ Developed platforms for digitizing car sales and maintenance workflows, with foc
 Developed bot platforms and automation frameworks using TypeScript, Node.js, Golang, React, and various data technologies.
 
 **Frontend Software Developer** at THEO Technologies NV (March 2019 - September 2020)  
-Developed cross-platform video players using TypeScript and JavaScript.
+Developed cross platform video players using TypeScript and JavaScript.
