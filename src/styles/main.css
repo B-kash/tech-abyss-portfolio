@@ -28,7 +28,7 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   background-color: var(--color-bg);
   color: var(--color-text);
   line-height: 1.6;
@@ -58,16 +58,30 @@ body {
 }
 
 .nav-logo {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   text-decoration: none;
-  letter-spacing: 0.05em;
   transition: var(--transition);
 }
 
-.nav-logo:hover {
-  color: var(--color-accent);
+.nav-logo-icon {
+  width: 32px;
+  height: 32px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.nav-wordmark {
+  height: 24px;
+  width: auto;
+  display: block;
+  opacity: 0.9;
+  transition: var(--transition);
+}
+
+.nav-logo:hover .nav-wordmark {
+  opacity: 1;
 }
 
 .nav-toggle {
@@ -458,6 +472,15 @@ body {
 @media (max-width: 768px) {
   .nav-container {
     position: relative;
+  }
+  
+  .nav-logo-icon {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .nav-wordmark {
+    height: 20px;
   }
   
   .nav-toggle {
