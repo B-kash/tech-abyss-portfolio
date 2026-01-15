@@ -204,6 +204,15 @@ body {
   font-weight: 300;
 }
 
+.hero-intro {
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  color: var(--color-text-muted);
+  max-width: 750px;
+  margin: var(--spacing-lg) auto 0;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
 /* Sections */
 .section {
   padding: var(--spacing-xl) var(--spacing-md);
@@ -224,6 +233,26 @@ body {
   margin-bottom: var(--spacing-lg);
   text-align: center;
   letter-spacing: -0.02em;
+}
+
+.section-intro {
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  color: var(--color-text-muted);
+  max-width: 850px;
+  margin: 0 auto var(--spacing-xl);
+  text-align: center;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.section-outro {
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  color: var(--color-text-muted);
+  max-width: 850px;
+  margin: var(--spacing-xl) auto 0;
+  text-align: center;
+  line-height: 1.7;
+  font-weight: 300;
 }
 
 /* Grid */

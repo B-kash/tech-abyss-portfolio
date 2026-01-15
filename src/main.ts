@@ -18,6 +18,34 @@ async function loadProjects() {
     
     if (!projectsGrid) return;
     
+    // Inject structured data for projects
+    projects.forEach((project: any, index: number) => {
+      const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": project.title,
+        "description": project.description,
+        "applicationCategory": "WebApplication",
+        "programmingLanguage": project.tech,
+        "url": project.try_now || project.link || "https://tech-abyss.com#projects",
+        "author": {
+          "@type": "Person",
+          "name": "Bikash Chapagain",
+          "url": "https://tech-abyss.com"
+        }
+      };
+      
+      const scriptId = `project-schema-${index}`;
+      const existingScript = document.getElementById(scriptId);
+      if (existingScript) existingScript.remove();
+      
+      const script = document.createElement('script');
+      script.id = scriptId;
+      script.type = 'application/ld+json';
+      script.textContent = JSON.stringify(structuredData);
+      document.head.appendChild(script);
+    });
+    
     projectsGrid.innerHTML = projects.map((project: any) => {
       const techTags = project.tech.map((tech: string) => 
         `<span class="tech-tag">${tech}</span>`
@@ -29,9 +57,9 @@ async function loadProjects() {
       ].filter(Boolean).join('');
       
       return `
-        <div class="project-card fade-in">
-          <h3 class="project-title">${project.title}</h3>
-          <p class="project-description">${project.description}</p>
+        <div class="project-card fade-in" itemscope itemtype="https://schema.org/SoftwareApplication">
+          <h3 class="project-title" itemprop="name">${project.title}</h3>
+          <p class="project-description" itemprop="description">${project.description}</p>
           <div class="project-tech">${techTags}</div>
           ${links ? `<div class="project-links">${links}</div>` : ''}
         </div>
