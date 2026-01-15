@@ -1,5 +1,3 @@
-# About
-
 I'm **Bikash Chapagain**, a fullStack software developer and systems consultant based in Leuven, Belgium. I work with organizations across Flanders and Belgium to solve complex technical challenges through clear thinking, reliable systems, and pragmatic solutions.
 
 I focus on building robust and maintainable systems across the full technology stack; from backend infrastructure to frontend interfaces. My approach centers on understanding problems deeply before architecting solutions that balance immediate needs with longterm scalability.
