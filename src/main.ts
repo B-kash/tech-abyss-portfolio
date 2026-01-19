@@ -3,6 +3,29 @@ import './styles/main.css';
 
 inject();
 
+function injectGoogleAnalytics() {
+  const gaId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+  if (!gaId) return;
+
+  if (!document.querySelector(`script[src*="gtag/js?id=${gaId}"]`)) {
+    const gtagScript = document.createElement('script');
+    gtagScript.async = true;
+    gtagScript.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+    document.head.appendChild(gtagScript);
+  }
+
+  const inlineScript = document.createElement('script');
+  inlineScript.textContent = `
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '${gaId}', { anonymize_ip: true });
+  `;
+  document.head.appendChild(inlineScript);
+}
+
+injectGoogleAnalytics();
+
 // Set current year in footer
 const yearElement = document.getElementById('current-year');
 if (yearElement) {
