@@ -1,241 +1,145 @@
-# Tech Abyss - Interactive Portfolio Game
+# Tech Abyss – Full-Stack Portfolio Website
 
-A 2D open-world portfolio website built as a playable game using Phaser 3, TypeScript, and Vite. Explore a game world, interact with NPCs, unlock buildings, and discover portfolio content through an immersive gaming experience.
+A professional, dark, and calm single-page portfolio for **The Abyss Systems Consultant** (Bikash Chapagain) built with **TypeScript**, **Vite**, and **semantic HTML/CSS**.  
+It focuses on full‑stack web development, clear problem–solution–outcome messaging, strong SEO, and AI‑readable structure.
 
-## 🎮 Features
+## 🌐 What this app is
 
-- **2D Open World**: Explore a 1024×1024 pixel world with wrapping boundaries
-- **Player Movement**: WASD or Arrow Keys for movement (276 px/s)
-- **NPC Interactions**: Talk to NPCs to unlock new areas and learn about the developer
-- **Zone System**: Unlock and access About, Projects, and Contact sections
-- **Save System**: Progress persists in localStorage (unlocked zones + player position)
-- **Collision Detection**: Player cannot walk through NPCs or buildings
-- **Building System**: Distinct building sprites for each zone type with collision
-- **Dialog System**: Interactive conversations with NPCs featuring typewriter effect
-- **Content Overlays**: View portfolio content in HTML modals with typewriter animations
-- **World Wrapping**: Seamless looping - exit one edge to appear on the opposite side
+- **Full‑stack focus**: Content emphasizes complete web applications (frontend + backend + integration)
+- **Clear sections**:
+  - Hero (who you are and what you do)
+  - What I Do (services)
+  - Who Should Work With Me (ideal clients and problems)
+  - How I Work (process)
+  - Projects (real GitHub projects)
+  - About (short, one‑screen bio)
+  - Contact (email, GitHub, LinkedIn, message)
+- **Content from files**:
+  - `public/content/about.md` – About text in Markdown
+  - `public/content/projects.json` – Projects list (title, description, tech, links)
+  - `public/content/contact.json` – Contact details and message
+- **Branding & typography**:
+  - Custom logo emblem + wordmark
+  - Fonts: `Space Grotesk` as primary, `Inter` as fallback
+- **Dark, trustworthy UI**:
+  - CSS variables for colors
+  - Gradient hero background and subtle effects
+  - Responsive layout with cards and grids
 
-## 🚀 Quick Start
+## 🧰 Tech stack
 
-### Prerequisites
+- **Vite** – dev server and build tooling
+- **TypeScript** – type-safe main script (`src/main.ts`)
+- **Vanilla JS + DOM** – no frontend framework
+- **Semantic HTML** – sections, headings, and ARIA attributes in `index.html`
+- **CSS** – custom styling in `src/styles/main.css`
+- **JSON/Markdown content** – loaded at runtime via `fetch`
 
-- Node.js 18+ and npm/yarn
+## 📦 Project structure (current)
 
-### Installation
-
-```bash
-npm install
-```
-
-### Development
-
-```bash
-npm run dev
-```
-
-The game will open in your browser at `http://localhost:3000`
-
-### Build
-
-```bash
-npm run build
-```
-
-### Preview Production Build
-
-```bash
-npm run preview
-```
-
-## 🎯 Controls
-
-- **WASD** or **Arrow Keys**: Move player
-- **E** or **Space**: Interact with NPCs/doors
-- **ESC**: Close dialog or content overlay
-
-## 🗺️ Game World
-
-The game world is a 1024×1024 pixel (64×64 tile) map with wrapping boundaries. The world contains:
-
-- **Starting Area**: Center of the world with Guide NPC nearby
-- **About House**: Unlocked after talking to the Guide (Northwest area)
-- **Projects Lab**: Unlocked after talking to the Engineer (Northeast area)
-- **Contact Office**: Unlocked after talking to the Contact NPC (Southwest area)
-
-### NPCs
-
-- **Guide**: Located near starting position, explains controls and unlocks the About House
-- **Engineer**: Located in the east area, unlocks the Projects Lab
-- **Contact**: Located in the west area, unlocks the Contact Office
-
-### Buildings/Doors
-
-- Buildings are represented as distinct sprites (houses/labs/offices)
-- Buildings have collision - player cannot walk through them
-- Interacting with an unlocked building (E or Space) teleports you and shows the zone content
-- Locked buildings appear darker (gray tint) with "(Locked)" label
-- Unlocked buildings appear in full color
-
-## 📁 Project Structure
-
-```
+```text
 tech-abyss_website/
 ├── public/
-│   ├── content/          # Portfolio content files
-│   │   ├── about.md      # About section markdown
-│   │   ├── projects.json # Projects list (Tech Abyss, Video Subtitles, Music Master, etc.)
-│   │   ├── blog.json     # Blog posts index
-│   │   └── contact.json  # Contact information (email, GitHub, LinkedIn, social)
-│   └── maps/             # Tiled map files
-│       ├── world.json    # Main game map (64×64 tiles = 1024×1024 pixels)
-│       └── tileset.tsx   # Tileset definition
+│   ├── content/
+│   │   ├── about.md        # About section content (Markdown)
+│   │   ├── projects.json   # Project cards (GitHub links, tech stack, etc.)
+│   │   └── contact.json    # Contact info (email, GitHub, LinkedIn, message)
+│   ├── logo_icon.svg
+│   ├── WordMark Variant.svg
+│   ├── favicon.ico
+│   ├── robots.txt          # Crawler and AI-bot rules
+│   └── sitemap.xml         # Sitemap for search engines
 ├── src/
-│   ├── scenes/           # Phaser scenes
-│   │   ├── BootScene.ts  # Asset loading and initialization
-│   │   └── WorldScene.ts # Main gameplay scene
-│   ├── systems/          # Game systems
-│   │   ├── SaveSystem.ts      # LocalStorage save/load
-│   │   └── InteractionSystem.ts # NPC/door interaction logic
-│   ├── ui/               # UI components
-│   │   ├── DialogUI.ts   # NPC dialog overlay (Phaser-based, fixed to screen)
-│   │   └── ContentOverlay.ts # About/Projects/Contact overlay (HTML/CSS modal)
-│   ├── data/             # Game data
-│   │   └── dialogs.ts    # NPC dialog definitions
-│   └── main.ts           # Game entry point
-├── index.html
+│   ├── main.ts             # Entry point: loads content, sets up nav, animations
+│   └── styles/
+│       └── main.css        # Dark theme, layout, responsive styles
+├── index.html              # Page structure + meta + JSON-LD
 ├── package.json
 ├── tsconfig.json
 └── vite.config.ts
 ```
 
-## 🗺️ Editing Maps with Tiled
+## 🚀 Getting started
 
-### Installing Tiled
+### Prerequisites
 
-Download Tiled Map Editor from: https://www.mapeditor.org/
+- Node.js 18+ and npm (or yarn/pnpm)
 
-### Map Structure
+### Install dependencies
 
-The game expects the following layers in your Tiled map:
-
-1. **Ground** (Tile Layer): Background tiles
-2. **Collisions** (Object Layer): Rectangle objects for walls/obstacles
-3. **npcs** (Object Layer): NPC spawn points with properties
-4. **doors** (Object Layer): Door zones with properties
-
-### Adding NPCs
-
-1. Create an object in the "npcs" layer
-2. Set object properties:
-   - `id`: Unique identifier (e.g., "guide", "engineer", "writer")
-   - `name`: Display name
-   - `dialogId`: Dialog to use (usually same as id)
-
-### Adding Doors
-
-1. Create a rectangle object in the "doors" layer
-2. Set object properties:
-   - `id`: Unique identifier (e.g., "aboutDoor")
-   - `requiredUnlock`: Zone name (e.g., "about", "projects", "blog")
-   - `targetX`: X coordinate to teleport to
-   - `targetY`: Y coordinate to teleport to
-   - `label`: Display name for the door
-
-### Exporting
-
-1. Export as JSON (File → Export As → JSON map files (*.json))
-2. Save to `public/maps/world.json`
-3. Ensure tileset image is referenced correctly (or use programmatic generation)
-
-## 🎨 Customization
-
-### Adding Content
-
-- **About**: Edit `public/content/about.md` (Markdown format)
-- **Projects**: Edit `public/content/projects.json` (JSON array with title, description, tech, link)
-- **Blog**: Edit `public/content/blog.json` (JSON with posts array)
-- **Contact**: Edit `public/content/contact.json` (JSON with email, GitHub, LinkedIn, social, message)
-
-### Adding NPCs and Dialogs
-
-1. Add dialog data to `src/data/dialogs.ts`
-2. Add NPC object in Tiled map or modify `addDefaultNPCs()` in `WorldScene.ts`
-3. Dialog format:
-   ```typescript
-   {
-     id: 'unique_id',
-     lines: [
-       { speaker: 'NPC Name', text: 'Dialog text here' }
-     ],
-     unlocksZone: 'zone_name' // optional
-   }
-   ```
-
-### Custom Sprites
-
-Sprites are currently generated programmatically in `BootScene.ts`:
-- Player sprite (32×32, blue shirt, pixel-art style)
-- NPC sprites (32×32, unique colors per NPC: Guide=orange, Engineer=cyan, Contact=green)
-- Building sprites (64×80, distinct colors: About=tan, Projects=blue, Contact=light green)
-- Tileset (128×128, 8×8 tiles, various terrain types)
-- Background pattern (64×64, sky with clouds)
-
-To use custom images instead, replace in `BootScene.ts`:
-```typescript
-this.load.image('player', 'path/to/player.png');
-this.load.image('npc_guide', 'path/to/guide.png');
-this.load.image('building_about', 'path/to/about-building.png');
-this.load.image('tileset', 'path/to/tileset.png');
+```bash
+npm install
 ```
 
-## 💾 Save System
+### Run in development
 
-Saves are stored in localStorage with the following structure:
-
-```typescript
-{
-  version: 1,
-  unlockedZones: ['about', 'projects', 'contact'],
-  playerPosition: { x: 512, y: 512 }
-}
+```bash
+npm run dev
 ```
 
-To reset progress, clear localStorage or call `SaveSystem.clear()` in the browser console.
+By default the site runs at `http://localhost:3000` (configured in `vite.config.ts`).
 
-## 🐛 Troubleshooting
+### Build for production
 
-### Map not loading
+```bash
+npm run build
+```
 
-- Check browser console for errors
-- Verify `public/maps/world.json` exists
-- Ensure map JSON is valid (can validate at jsonlint.com)
-- Game will fall back to a default map if loading fails
+### Preview the production build
 
-### NPCs/Doors not appearing
+```bash
+npm run preview
+```
 
-- Verify object layers are named correctly ("npcs", "doors")
-- Check object properties are set correctly
-- Check browser console for parsing errors
-- Game will add default NPCs/doors if none found in map
+## 📄 Content editing
 
-### Content not loading
+- **About section** (`/public/content/about.md`)
+  - Edit the Markdown file to change the About copy (headings and paragraphs).
+- **Projects** (`/public/content/projects.json`)
+  - JSON array of project objects. Each project can include:
+    - `title`
+    - `description`
+    - `tech`
+    - `github`
+    - optional `try_now` link
+  - These are rendered into the Projects grid and used to generate `SoftwareApplication` JSON‑LD.
+- **Contact** (`/public/content/contact.json`)
+  - Update `email`, `github`, `linkedin`, and `message` fields.
 
-- Verify files exist in `public/content/`
-- Check browser network tab for 404 errors
-- Ensure content files are valid JSON/Markdown
-- Default content will be shown if files can't be loaded
+Changes to these files are picked up by the frontend at runtime without changing TypeScript code.
+
+## 📱 Responsiveness & UX
+
+- **Mobile‑first layout**:
+  - Stacked sections and cards on small screens
+  - Generous spacing and legible font sizes
+- **Navigation**:
+  - Desktop: horizontal nav bar
+  - Mobile: hamburger menu (`.nav-toggle`) to open/close nav links
+- **Animations**:
+  - Intersection Observer adds fade‑in animations for sections as they scroll into view.
+
+## 🔍 SEO & AI readiness
+
+- **SEO meta tags** in `index.html`:
+  - `<title>` and `<meta name="description">` tuned for full‑stack development in Belgium/Flanders/Leuven
+  - `<meta name="keywords">`, `author`, `canonical` URL
+  - Open Graph (`og:*`) and Twitter Card (`twitter:*`) tags (title, description, URL, image)
+- **Structured data (JSON‑LD)**:
+  - `Person` (Bikash Chapagain)
+  - `ProfessionalService` (The Abyss Systems Consultant)
+  - `WebSite` and `BreadcrumbList`
+  - Per‑project `SoftwareApplication` entries generated dynamically from `projects.json`
+- **Robots & AI training control**:
+  - `robots.txt` allows crawling the site
+  - Additional directives to disallow several AI training bots
+  - `meta` tags for `robots`, `googlebot`, `bingbot`, `noai`, `noimageai`
+- **AI‑readable content**:
+  - Clear headings and semantic sections
+  - Problem–solution–outcome wording for services and process
+  - `noscript` fallbacks for key content blocks (Projects, About, Contact)
 
 ## 📝 License
 
-MIT License - feel free to use this as a template for your own portfolio!
+MIT License – you can reuse or adapt this setup for your own portfolio.
 
-## 🙏 Credits
-
-- **Phaser 3**: Game framework
-- **Tiled**: Map editor
-- **Vite**: Build tool
-- **TypeScript**: Type safety
-
----
-
-Built with ❤️ using Phaser 3, TypeScript, and Vite
