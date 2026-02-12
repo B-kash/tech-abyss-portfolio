@@ -105,8 +105,21 @@ const Footer = () => {
         </div>
 
         <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-gray-600 font-mono tracking-tighter">
-          <p>© 2026 TECH ABYSS. ALL RIGHTS RESERVED.</p>
-          <p>DEVELOPED WITH ANXIETY BY <a href="https://www.nxit.tech" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline decoration-dotted">NXIT.TECH</a></p>
+          <div className="mt-3 text-lg w-full flex gap-2">
+            © 2026 Tech Abyss.
+            <div className={'flex gap-2'}>
+              Designed with {' '}
+              <a
+                  href="https://nxin.tech"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-text="Subhechhya Tuladhar"
+                  className="glitch-link text-emerald-400 hover:text-white transition-colors block"
+              >
+                Anxiety
+              </a>
+            </div>
+          </div>
         </div>
       </motion.div>
     </footer>
