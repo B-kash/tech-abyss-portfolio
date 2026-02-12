@@ -30,8 +30,8 @@ export default function NotFound() {
           >
             <h2 className="text-3xl sm:text-4xl font-bold font-bricolage">Page Not Found</h2>
             <p className="text-gray-400 text-lg max-w-md mx-auto font-inter">
-              Oops! The page you're looking for seems to have drifted into the abyss. 
-              Let's get you back on track.
+              Oops! The page you&apos;re looking for seems to have drifted into the abyss.
+              Let&apos;s get you back on track.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8 font-inter">

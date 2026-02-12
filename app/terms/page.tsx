@@ -47,7 +47,7 @@ const TermsPage = () => {
             <motion.section variants={staggerItem} className="space-y-4">
               <h2 className="text-2xl sm:text-3xl font-bold text-white">1. Introduction</h2>
               <p className="leading-relaxed">
-                Welcome to Tech Abyss. These Terms and Conditions ("Terms") govern your use of our website and services.
+                Welcome to Tech Abyss. These Terms and Conditions (&quot;Terms&quot;) govern your use of our website and services.
                 By accessing or using our services, you agree to be bound by these Terms. If you do not agree with any
                 part of these Terms, please do not use our services.
               </p>
@@ -123,7 +123,7 @@ const TermsPage = () => {
             <motion.section variants={staggerItem} className="space-y-4">
               <h2 className="text-2xl sm:text-3xl font-bold text-white">7. Warranties and Disclaimers</h2>
               <p className="leading-relaxed">
-                Our services are provided "as is" and "as available" without warranties of any kind, either express or
+                Our services are provided &quot;as is&quot; and &quot;as available&quot; without warranties of any kind, either express or
                 implied. We do not warrant that our services will be uninterrupted, secure, or error-free. We strive to
                 deliver high-quality work but cannot guarantee specific results or outcomes.
               </p>
@@ -143,7 +143,7 @@ const TermsPage = () => {
               <h2 className="text-2xl sm:text-3xl font-bold text-white">9. Changes to Terms</h2>
               <p className="leading-relaxed">
                 We reserve the right to modify these Terms at any time. We will notify users of any material changes by
-                posting the new Terms on this page and updating the "Last updated" date. Your continued use of our services
+                posting the new Terms on this page and updating the &quot;Last updated&quot; date. Your continued use of our services
                 after such modifications constitutes your acceptance of the updated Terms.
               </p>
             </motion.section>

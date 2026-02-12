@@ -11,7 +11,7 @@ const FAQItem = ({ question, answer }: { question: string, answer: string }) => 
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <motion.div 
+    <motion.div
       variants={staggerItem}
       className="border-b border-white/10"
     >
@@ -32,7 +32,7 @@ const FAQItem = ({ question, answer }: { question: string, answer: string }) => 
       </button>
       <motion.div
         initial={false}
-        animate={{ 
+        animate={{
           height: isOpen ? "auto" : 0,
           opacity: isOpen ? 1 : 0,
           marginBottom: isOpen ? 24 : 0
@@ -81,8 +81,8 @@ const FAQPage = () => {
         {/* Header */}
         <div className="border-b border-white/10">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
             >
               <ArrowLeft size={20} />
@@ -125,8 +125,8 @@ const FAQPage = () => {
             className="mt-20 p-8 rounded-2xl bg-white/5 border border-white/10 text-center"
           >
             <h2 className="text-2xl font-bold mb-4 font-bricolage">Still have questions?</h2>
-            <p className="text-gray-400 mb-8 font-inter">Can't find the answer you're looking for? Please chat with our friendly team.</p>
-            <Link 
+            <p className="text-gray-400 mb-8 font-inter">Can&apos;t find the answer you&apos;re looking for? Please chat with our friendly team.</p>
+            <Link
               href="mailto:hello@techabyss.com"
               className="inline-flex px-8 py-3 bg-white text-black font-bold rounded-lg hover:bg-gray-200 transition-colors"
             >

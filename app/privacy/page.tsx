@@ -173,7 +173,7 @@ const PrivacyPage = () => {
             </motion.section>
 
             <motion.section variants={staggerItem} className="space-y-4">
-              <h2 className="text-2xl sm:text-3xl font-bold text-white">10. Children's Privacy</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white">10. Children&apos;s Privacy</h2>
               <p className="leading-relaxed">
                 Our services are not intended for individuals under the age of 18. We do not knowingly collect personal
                 information from children. If you believe we have collected information from a child, please contact us
@@ -193,7 +193,7 @@ const PrivacyPage = () => {
               <h2 className="text-2xl sm:text-3xl font-bold text-white">12. Changes to This Privacy Policy</h2>
               <p className="leading-relaxed">
                 We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new
-                Privacy Policy on this page and updating the "Last updated" date. We encourage you to review this Privacy
+                Privacy Policy on this page and updating the &quot;Last updated&quot; date. We encourage you to review this Privacy
                 Policy periodically for any changes.
               </p>
             </motion.section>

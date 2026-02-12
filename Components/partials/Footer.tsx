@@ -1,6 +1,6 @@
 'use client';
 
-import { Facebook, Instagram, Linkedin, Github } from 'lucide-react'
+import { Linkedin, Github } from 'lucide-react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { staggerContainer, staggerItem } from '@/utils/animations'
@@ -110,11 +110,11 @@ const Footer = () => {
             <div className={'flex gap-2'}>
               Designed with {' '}
               <a
-                  href="https://nxin.tech"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-text="Subhechhya Tuladhar"
-                  className="glitch-link text-emerald-400 hover:text-white transition-colors block"
+                href="https://nxin.tech"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-text="Subhechhya Tuladhar"
+                className="glitch-link text-emerald-400 hover:text-white transition-colors block"
               >
                 Anxiety
               </a>

@@ -8,7 +8,7 @@ import {
 } from "@tabler/icons-react";
 
 import { CONTACT, ABOUT } from '@/utils/data';
-import { fadeInUp, staggerContainer, staggerItem, textReveal } from '@/utils/animations';
+import { staggerContainer, staggerItem, textReveal } from '@/utils/animations';
 
 const HeroSection = () => {
   const { scrollY } = useScroll();

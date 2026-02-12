@@ -1,7 +1,7 @@
 // Reusable Framer Motion animation variants and utilities
 import { Variants } from 'framer-motion'
 
-export const premiumEase = [0.23, 1, 0.32, 1]
+export const premiumEase = [0.23, 1, 0.32, 1] as const
 
 export const fadeIn: Variants = {
   hidden: { opacity: 0 },

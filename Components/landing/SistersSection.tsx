@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Globe } from 'lucide-react';
-import { fadeInUp, staggerContainer, staggerItem } from '@/utils/animations';
+import { fadeInUp, staggerContainer } from '@/utils/animations';
 
 const SistersSection = () => {
   return (
@@ -32,7 +32,7 @@ const SistersSection = () => {
 
             <motion.p variants={fadeInUp} className="text-gray-400 text-lg sm:text-xl leading-relaxed font-inter max-w-xl">
               While our hub is rooted in the heart of <span className="text-white font-semibold">Belgium</span>,
-              we've expanded our technical roots to <span className="text-white font-semibold">Nepal</span> through
+              we&apos;ve expanded our technical roots to <span className="text-white font-semibold">Nepal</span> through
               our sister branch, <a href="https://nxin.tech" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300 underline underline-offset-4 transition-colors">Next In Tech</a>.
             </motion.p>
 

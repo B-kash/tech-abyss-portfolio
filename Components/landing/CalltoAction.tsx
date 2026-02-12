@@ -17,7 +17,7 @@ const CallToAction = () => {
         >
           <div className="max-w-2xl">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight text-white mb-4 font-bricolage">
-              Let's Connect!
+              Let&apos;s Connect!
             </h2>
             <p className="text-gray-400 text-base sm:text-lg">
               {CONTACT.message}

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Badge } from "@mantine/core";
 import { staggerContainer, staggerItem } from "@/utils/animations";
 
@@ -73,14 +74,15 @@ export default function MarketingSection() {
                 className={`flex ${index % 2 === 1 ? "lg:order-2 justify-start" : "justify-end"}`}
               >
                 <motion.div
-                  className="w-full max-w-[460px] h-full max-h-[360px] overflow-hidden rounded-xl shadow-2xl aspect-square bg-gray-900 ml:100"
+                  className="w-full max-w-[460px] h-full max-h-[360px] overflow-hidden rounded-xl shadow-2xl aspect-square bg-gray-900 ml:100 relative"
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
                 >
-                  <img
+                  <Image
                     src={service.image}
                     alt={service.title}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                 </motion.div>
               </div>
