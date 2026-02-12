@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
     return (
         <PageTransition>
-            <div className="pt-24 min-h-screen">
+            <div className="pt-20 min-h-screen">
                 <ProjectsSection />
             </div>
         </PageTransition>

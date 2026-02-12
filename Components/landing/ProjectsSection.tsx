@@ -21,7 +21,6 @@ export default function ProjectsSection() {
             className="bg-transparent text-white py-20 lg:py-32 border-t border-white/5 relative overflow-hidden"
         >
             {/* Background elements */}
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none" />
             <div className="absolute -top-24 -right-24 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
 

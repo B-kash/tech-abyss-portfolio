@@ -51,7 +51,9 @@ export function Header() {
   };
 
   return (
-    <header className="fixed top-0 w-full z-30 border-b border-border bg-background/80 backdrop-blur-sm">
+    <header className="fixed top-0 w-full z-30 border-b border-white/5 bg-black/60 backdrop-blur-xl overflow-hidden">
+      {/* Noise overlay */}
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none z-[-1]" />
       <div className="w-full px-8 py-6 flex items-center">
         <Link href="/" className="lg:order-first flex items-center gap-3 group">
           <Logo />

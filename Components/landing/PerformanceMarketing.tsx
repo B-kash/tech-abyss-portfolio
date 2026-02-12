@@ -66,15 +66,15 @@ export default function MarketingSection() {
             <motion.div
               key={index}
               variants={staggerItem}
-              className={`grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24 items-center sticky top-32 bg-gradient-to-br from-slate-900 to-black py-16 mb-8 ${index % 2 === 1 ? "lg:flex-row-reverse" : ""
+              className={`group relative grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24 items-center sticky top-32 bg-[#0A0A0A]/90 backdrop-blur-xl border border-white/5 py-16 px-8 sm:px-12 mb-12 rounded-[2rem] shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.5)] transition-all duration-500 ${index % 2 === 1 ? "lg:flex-row-reverse" : ""
                 }`}
               style={{
                 zIndex: index + 1,
-                boxShadow: "0 -20px 40px -10px rgba(0,0,0,0.5)",
-                padding: "16px",
-                borderRadius: "16px"
               }}
             >
+              {/* Noise and Gradient Overlays */}
+              <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none rounded-[2rem]" />
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-[2rem]" />
               {/* Image */}
               <div
                 className={`flex ${index % 2 === 1 ? "lg:order-2 justify-start" : "justify-end"}`}
@@ -99,9 +99,8 @@ export default function MarketingSection() {
               >
                 <Badge
                   radius="sm"
-                  variant="light"
-                  color="gray"
-                  className="bg-zinc-800/50 text-white/70 px-4 py-1"
+                  variant="outline"
+                  className="bg-purple-500/5 border-purple-500/20 text-purple-400 px-4 py-1 uppercase tracking-widest text-[10px]"
                   size="lg"
                 >
                   {service.badge}

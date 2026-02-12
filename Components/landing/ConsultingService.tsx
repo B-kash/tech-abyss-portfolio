@@ -19,13 +19,13 @@ export default function ServicesSection() {
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <motion.div
-          className="mb-12 sm:mb-16 lg:mb-20"
+          className="mb-20 sm:mb-16 lg:mb-20"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
         >
-          <h1 className="text-3xl sm:text-4xl lg:text-4xl font-bricolage leading-tight mb-6 sm:mb-8 max-w-4xl ml-35">
+          <h1 className="text-4xl sm:text-4xl lg:text-5xl font-bricolage leading-tight mb-6 sm:mb-8 max-w-4xl ml-35">
             Full-stack software development and consulting services
           </h1>
           <p className="text-lg sm:text-xl lg:text-2xl text-gray-400 max-w-4xl leading-relaxed ml-35 font-bricolage">
