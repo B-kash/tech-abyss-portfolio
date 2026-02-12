@@ -10,7 +10,12 @@ export default function ServicesSection() {
   const services = SERVICES
 
   return (
-    <section id="services" className="min-h-screen bg-black text-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
+    <section
+      id="services"
+      onMouseEnter={() => window.dispatchEvent(new CustomEvent('glow-enlarge', { detail: { active: true } }))}
+      onMouseLeave={() => window.dispatchEvent(new CustomEvent('glow-enlarge', { detail: { active: false } }))}
+      className="min-h-screen bg-transparent text-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8"
+    >
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <motion.div
@@ -23,7 +28,7 @@ export default function ServicesSection() {
           <h1 className="text-3xl sm:text-4xl lg:text-4xl font-bricolage leading-tight mb-6 sm:mb-8 max-w-4xl ml-35">
             Full-stack software development and consulting services
           </h1>
-          <p className="text-lg sm:text-xl lg:text-2xl text-gray-400 max-w-4xl leading-relaxed ml-35 font-inter">
+          <p className="text-lg sm:text-xl lg:text-2xl text-gray-400 max-w-4xl leading-relaxed ml-35 font-bricolage">
             Building complete web applications from frontend to backend with modern technologies and best practices.
           </p>
         </motion.div>

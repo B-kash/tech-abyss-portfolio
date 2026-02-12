@@ -6,7 +6,12 @@ import { staggerContainer, staggerItem } from '@/utils/animations'
 
 export default function FullStackSection() {
   return (
-    <section id="overview" className="min-h-screen bg-[#0a0a0a] text-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
+    <section
+      id="overview"
+      onMouseEnter={() => window.dispatchEvent(new CustomEvent('glow-enlarge', { detail: { active: true } }))}
+      onMouseLeave={() => window.dispatchEvent(new CustomEvent('glow-enlarge', { detail: { active: false } }))}
+      className="min-h-screen bg-transparent text-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8"
+    >
       <div className="max-w-7xl mx-auto">
         {/* Header Text */}
         <motion.div
@@ -36,7 +41,7 @@ export default function FullStackSection() {
             className="relative aspect-[4/3] rounded-lg overflow-hidden group cursor-pointer"
           >
             {/* Animated Background Effect */}
-            <div className="absolute inset-0 bg-black">
+            <div className="absolute inset-0 ">
               <svg
                 className="w-full h-full"
                 viewBox="0 0 800 600"
@@ -170,7 +175,7 @@ export default function FullStackSection() {
                 {/* Pulsing ring */}
                 <div className="absolute inset-0 rounded-full border-2 border-white animate-ping opacity-75"></div>
                 {/* Main button */}
-                <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-white flex items-center justify-center bg-black/20 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-white/10">
+                <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-white flex items-center justify-center /20 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-white/10">
                   <IconPlayerPlay
                     size={28}
                     fill="white"

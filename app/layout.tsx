@@ -5,6 +5,7 @@ import "@mantine/core/styles.css";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import Header from "@/Components/partials/Navbar";
 import Footer from "@/Components/partials/Footer";
+import MouseLight from "@/Components/shared/MouseLight";
 import GoogleAnalytics from "@/Components/shared/GoogleAnalytics";
 
 const bricolage = Bricolage_Grotesque({
@@ -84,14 +85,19 @@ export default function RootLayout({
       <head>
         <ColorSchemeScript defaultColorScheme="dark" />
       </head>
-      <body className={`${bricolage.variable} ${inter.variable} antialiased bg-black text-white font-inter`}>
+      <body className={`${bricolage.variable} ${inter.variable} antialiased  text-white font-bricolage relative`}>
         <GoogleAnalytics />
+        <MouseLight />
         <MantineProvider defaultColorScheme="dark">
-          <Header />
-          <main className="min-h-screen">
+          <div className="relative z-20">
+            <Header />
+          </div>
+          <main className="min-h-screen relative z-10">
             {children}
           </main>
-          <Footer />
+          <div className="relative z-20">
+            <Footer />
+          </div>
         </MantineProvider>
       </body>
     </html>

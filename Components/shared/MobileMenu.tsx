@@ -38,7 +38,7 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 lg:hidden"
+            className="fixed inset-0 /80 backdrop-blur-sm z-40 lg:hidden"
           />
 
           {/* Menu */}
@@ -47,7 +47,7 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed top-0 right-0 bottom-0 w-[280px] bg-black border-l border-white/10 z-50 lg:hidden"
+            className="fixed top-0 right-0 bottom-0 w-[280px]  border-l border-white/10 z-50 lg:hidden"
           >
             {/* Close Button */}
             <button

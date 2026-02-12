@@ -21,7 +21,7 @@ export default function Error({
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
+      <div className="min-h-screen  text-white flex items-center justify-center px-4">
         <div className="max-w-2xl mx-auto text-center">
           <motion.div
             variants={scaleIn}
@@ -53,13 +53,13 @@ export default function Error({
             className="space-y-6"
           >
             <h1 className="text-4xl sm:text-5xl font-bold font-bricolage">Something Went Wrong</h1>
-            <p className="text-gray-400 text-lg max-w-md mx-auto font-inter">
+            <p className="text-gray-400 text-lg max-w-md mx-auto font-bricolage">
               We encountered an unexpected error. Don&apos;t worry, our team has been notified
               and we&apos;re working to fix it.
             </p>
 
             <div className="bg-white/5 border border-white/10 rounded-lg p-6 max-w-md mx-auto">
-              <p className="text-sm text-gray-400 font-inter">
+              <p className="text-sm text-gray-400 font-bricolage">
                 If the problem persists, please try refreshing the page or contact our support team.
               </p>
             </div>

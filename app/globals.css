@@ -124,10 +124,16 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+body {
+  background: radial-gradient(circle at 50% -20%, #020617 0%, #000000 80%) !important;
+  background-attachment: fixed;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }

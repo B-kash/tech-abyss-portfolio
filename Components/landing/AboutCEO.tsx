@@ -6,7 +6,7 @@ import { fadeInUp, staggerContainer, premiumEase } from '@/utils/animations'
 
 export default function AboutCEO() {
     return (
-        <section id="about-ceo" className="bg-black text-white py-20 lg:py-32 border-t border-white/5">
+        <section id="about-ceo" className=" text-white py-20 lg:py-32 border-t border-white/5">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     {/* Text Content */}
@@ -29,7 +29,7 @@ export default function AboutCEO() {
                             />
                         </motion.div>
 
-                        <motion.div variants={fadeInUp} className="space-y-6 text-gray-400 text-lg leading-relaxed font-inter">
+                        <motion.div variants={fadeInUp} className="space-y-6 text-gray-400 text-lg leading-relaxed font-bricolage">
                             <p className="text-white font-semibold text-xl">
                                 {ABOUT.description}
                             </p>

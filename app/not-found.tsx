@@ -9,7 +9,7 @@ import { fadeInUp, scaleIn } from '@/utils/animations'
 export default function NotFound() {
   return (
     <PageTransition>
-      <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
+      <div className="min-h-screen  text-white flex items-center justify-center px-4">
         <div className="max-w-2xl mx-auto text-center">
           <motion.div
             variants={scaleIn}
@@ -29,12 +29,12 @@ export default function NotFound() {
             className="space-y-6"
           >
             <h2 className="text-3xl sm:text-4xl font-bold font-bricolage">Page Not Found</h2>
-            <p className="text-gray-400 text-lg max-w-md mx-auto font-inter">
+            <p className="text-gray-400 text-lg max-w-md mx-auto font-bricolage">
               Oops! The page you&apos;re looking for seems to have drifted into the abyss.
               Let&apos;s get you back on track.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8 font-inter">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8 font-bricolage">
               <Link
                 href="/"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all duration-300 hover:scale-105"

@@ -11,7 +11,7 @@ const IntroSection = () => {
   return (
     <section
       id="approach"
-      className="w-full border-t border-slate-800 bg-black px-4 py-12 sm:py-16 lg:py-20 sm:px-6 lg:px-8 "
+      className="w-full border-t border-slate-800 bg-transparent px-4 py-12 sm:py-16 lg:py-20 sm:px-6 lg:px-8 "
     >
       <div className="mx-auto max-w-7xl">
         <div className="space-y-12 sm:space-y-16 lg:space-y-20 ">

@@ -3,10 +3,11 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { CONTACT } from "@/utils/data";
+import { fadeInUp } from "@/utils/animations";
 
 const CallToAction = () => {
   return (
-    <section className="w-full bg-black px-4 py-12 sm:py-16 lg:py-20 sm:px-6 lg:px-8">
+    <section className="w-full bg-transparent px-4 py-12 sm:py-16 lg:py-20 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <motion.div
           className="flex flex-col items-center justify-between gap-6 sm:gap-8 rounded-lg border border-slate-800 bg-gradient-to-br from-slate-900 to-black p-8 sm:p-12 lg:p-16 sm:flex-row"
@@ -19,7 +20,13 @@ const CallToAction = () => {
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight text-white mb-4 font-bricolage">
               Let&apos;s Connect!
             </h2>
-            <p className="text-gray-400 text-base sm:text-lg">
+            <motion.p
+              variants={fadeInUp}
+              className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 font-bricolage"
+            >
+              Ready to bring your full-stack project to life? Let&apos;s discuss how I can help you build scalable web applications and solve your technical challenges.
+            </motion.p>
+            <p className="text-gray-400 text-base sm:text-lg mb-8">
               {CONTACT.message}
             </p>
           </div>

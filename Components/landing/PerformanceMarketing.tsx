@@ -36,7 +36,7 @@ export default function MarketingSection() {
   return (
     <section
       id="teams"
-      className="bg-gradient-to-b from-black via-zinc-950 to-black text-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8"
+      className="bg-transparent text-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8"
     >
       <div className="px-44">
         {/* Top heading */}
@@ -66,8 +66,14 @@ export default function MarketingSection() {
             <motion.div
               key={index}
               variants={staggerItem}
-              className={`grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24 items-center sticky top-32 bg-black ${index % 2 === 1 ? "lg:flex-row-reverse" : ""
+              className={`grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24 items-center sticky top-32 bg-gradient-to-br from-slate-900 to-black py-16 mb-8 ${index % 2 === 1 ? "lg:flex-row-reverse" : ""
                 }`}
+              style={{
+                zIndex: index + 1,
+                boxShadow: "0 -20px 40px -10px rgba(0,0,0,0.5)",
+                padding: "16px",
+                borderRadius: "16px"
+              }}
             >
               {/* Image */}
               <div
@@ -101,11 +107,11 @@ export default function MarketingSection() {
                   {service.badge}
                 </Badge>
 
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-inter leading-tight">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bricolage leading-tight">
                   {service.title}
                 </h2>
 
-                <p className="text-zinc-400 leading-relaxed text-base sm:text-lg max-w-xl font-inter">
+                <p className="text-zinc-400 leading-relaxed text-base sm:text-lg max-w-xl font-bricolage">
                   {service.description}
                 </p>
               </div>

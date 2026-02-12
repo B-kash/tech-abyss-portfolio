@@ -6,7 +6,7 @@ import { fadeInUp, staggerContainer } from '@/utils/animations';
 
 const SistersSection = () => {
   return (
-    <section id="locations" className="bg-black text-white py-20 lg:py-32 overflow-hidden border-t border-white/5">
+    <section id="locations" className=" text-white py-20 lg:py-32 overflow-hidden border-t border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
@@ -18,13 +18,16 @@ const SistersSection = () => {
             viewport={{ once: true, amount: 0.3 }}
             className="space-y-8"
           >
-            <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm font-medium">
-              <Globe size={16} />
-              <span>International Presence</span>
+            <motion.div
+              variants={fadeInUp}
+              className="inline-flex p-3 rounded-2xl bg-purple-500/10 border border-purple-500/20 mb-8"
+              whileHover={{ scale: 1.1, rotate: 5 }}
+            >
+              <Globe className="text-purple-500" size={32} />
             </motion.div>
 
             <motion.h2 variants={fadeInUp} className="text-4xl sm:text-5xl lg:text-6xl font-bold font-bricolage leading-[1.1]">
-              We have sisters <br />
+              We have siblings <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
                 all over the world.
               </span>
@@ -32,8 +35,8 @@ const SistersSection = () => {
 
             <motion.p variants={fadeInUp} className="text-gray-400 text-lg sm:text-xl leading-relaxed font-inter max-w-xl">
               While our hub is rooted in the heart of <span className="text-white font-semibold">Belgium</span>,
-              we&apos;ve expanded our technical roots to <span className="text-white font-semibold">Nepal</span> through
-              our sister branch, <a href="https://nxin.tech" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300 underline underline-offset-4 transition-colors">Next In Tech</a>.
+              we&apos;ve expanded our designing roots to <span className="text-white font-semibold">Nepal</span> through
+              our sibling, <a href="https://nxin.tech" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300 underline underline-offset-4 transition-colors">Next In Tech</a>.
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap gap-8 pt-4">
@@ -44,7 +47,7 @@ const SistersSection = () => {
               <div className="h-12 w-px bg-white/10 hidden sm:block"></div>
               <div className="space-y-1">
                 <div className="text-2xl font-bold text-white">Nepal</div>
-                <div className="text-gray-500 uppercase tracking-widest text-xs">Sister Branch</div>
+                <div className="text-gray-500 uppercase tracking-widest text-xs">Sibling</div>
               </div>
             </motion.div>
           </motion.div>

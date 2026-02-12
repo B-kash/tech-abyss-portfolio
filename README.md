@@ -6,7 +6,7 @@ TechAbyss is a premier full-stack software development and consulting agency. We
 
 We operate a dual-presence model to ensure 24/7 delivery and support:
 - **Headquarters**: Brussels, Belgium
-- **Sister Branch**: [Next In Tech](https://nxin.tech) - Sanepa, Lalitpur, Nepal
+- **Sibling Branch**: [Next In Tech](https://nxin.tech) - Sanepa, Lalitpur, Nepal
 
 ## 🚀 Key Features
 

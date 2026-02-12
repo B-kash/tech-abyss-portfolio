@@ -9,7 +9,7 @@ import Logo from './Logo'
 
 const Footer = () => {
   return (
-    <footer className="w-full border-t border-slate-800 bg-black px-4 py-12 sm:py-16 sm:px-6 lg:px-8">
+    <footer className="w-full border-t border-slate-800  px-4 py-12 sm:py-16 sm:px-6 lg:px-8">
       <motion.div
         className="mx-auto max-w-7xl"
         variants={staggerContainer}
@@ -23,7 +23,7 @@ const Footer = () => {
           {/* Brand */}
           <motion.div variants={staggerItem} className="space-y-6">
             <Logo />
-            <div className="space-y-4 text-sm text-gray-400 font-inter">
+            <div className="space-y-4 text-sm text-gray-400 font-bricolage">
               <div>
                 <p className="text-white font-medium">Headquarters</p>
                 <p>Brussels, Belgium</p>
@@ -70,19 +70,19 @@ const Footer = () => {
           <motion.div variants={staggerItem} className="space-y-4">
             <h4 className="text-xs font-semibold uppercase tracking-widest text-gray-500">Menu</h4>
             <div className="space-y-3 text-sm">
-              <Link href="/#overview" className="block text-gray-400 transition-colors hover:text-white font-inter">
+              <Link href="/#overview" className="block text-gray-400 transition-colors hover:text-white font-bricolage">
                 OVERVIEW
               </Link>
-              <Link href="/#services" className="block text-gray-400 transition-colors hover:text-white font-inter">
+              <Link href="/#services" className="block text-gray-400 transition-colors hover:text-white font-bricolage">
                 SERVICES
               </Link>
-              <Link href="/projects" className="block text-gray-400 transition-colors hover:text-white font-inter">
+              <Link href="/projects" className="block text-gray-400 transition-colors hover:text-white font-bricolage">
                 WORKS
               </Link>
-              <Link href="/#approach" className="block text-gray-400 transition-colors hover:text-white font-inter">
+              <Link href="/#approach" className="block text-gray-400 transition-colors hover:text-white font-bricolage">
                 PROCESS
               </Link>
-              <Link href="/about" className="block text-gray-400 transition-colors hover:text-white font-inter">
+              <Link href="/about" className="block text-gray-400 transition-colors hover:text-white font-bricolage">
                 PROFILE
               </Link>
             </div>
@@ -92,7 +92,7 @@ const Footer = () => {
           <motion.div variants={staggerItem} className="space-y-6">
             <div>
               <h4 className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-2">Local Time</h4>
-              <div className="space-y-1 text-sm text-white/80 font-mono">
+              <div className="space-y-1 text-sm text-white/80 font-bricolage">
                 <p>BE: UTC+1</p>
                 <p>NP: UTC+5:45</p>
               </div>
@@ -104,7 +104,7 @@ const Footer = () => {
           </motion.div>
         </div>
 
-        <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-gray-600 font-mono tracking-tighter">
+        <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-gray-600 font-bricolage tracking-tighter">
           <div className="mt-3 text-lg w-full flex gap-2">
             © 2026 Tech Abyss.
             <div className={'flex gap-2'}>

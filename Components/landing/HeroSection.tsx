@@ -17,7 +17,9 @@ const HeroSection = () => {
   return (
     <motion.div
       id="hero"
-      className="min-h-screen bg-black text-white relative overflow-hidden"
+      onMouseEnter={() => window.dispatchEvent(new CustomEvent('glow-enlarge', { detail: { active: true } }))}
+      onMouseLeave={() => window.dispatchEvent(new CustomEvent('glow-enlarge', { detail: { active: false } }))}
+      className="min-h-screen bg-transparent text-white relative overflow-hidden"
       initial="hidden"
       animate="visible"
       variants={staggerContainer}
@@ -94,7 +96,7 @@ const HeroSection = () => {
               priority
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-l from-transparent via-black/20 to-black/80"></div>
+          {/* <div className="absolute inset-0 bg-gradient-to-l from-transparent via-black/20 to-black/80"></div> */}
         </motion.div>
 
         {/* Right Accent Line */}

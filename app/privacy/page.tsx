@@ -9,7 +9,7 @@ import { fadeInUp, staggerContainer, staggerItem } from '@/utils/animations';
 const PrivacyPage = () => {
   return (
     <PageTransition>
-      <div className="min-h-screen bg-black text-white pt-24">
+      <div className="min-h-screen  text-white pt-24">
         {/* Header */}
         <div className="border-b border-white/10">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -42,7 +42,7 @@ const PrivacyPage = () => {
             variants={staggerContainer}
             initial="hidden"
             animate="visible"
-            className="space-y-8 text-gray-300 font-inter"
+            className="space-y-8 text-gray-300 font-bricolage"
           >
             <motion.section variants={staggerItem} className="space-y-4">
               <h2 className="text-2xl sm:text-3xl font-bold text-white">1. Introduction</h2>
