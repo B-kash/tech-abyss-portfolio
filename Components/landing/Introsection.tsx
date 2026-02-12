@@ -34,13 +34,13 @@ const IntroSection = () => {
 
           {/* Grid of Approaches */}
           <motion.div
-            className="grid grid-cols-3 grid-rows-2 gap-6 sm:gap-8 lg:gap-10"
+            className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 lg:gap-10"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
           >
-            <div></div>
+            <div className="hidden sm:block"></div>
             {approaches.map((item, index) => (
               <motion.div
                 key={index}
@@ -66,7 +66,7 @@ const IntroSection = () => {
                 </div>
               </motion.div>
             ))}
-            <div></div>
+            <div className="hidden sm:block"></div>
           </motion.div>
         </div>
       </div>

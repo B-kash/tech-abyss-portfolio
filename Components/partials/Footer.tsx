@@ -114,7 +114,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-text="Subhechhya Tuladhar"
-                className="glitch-link text-emerald-400 hover:text-white transition-colors block"
+                className="glitch-link text-sky-400 hover:text-white transition-colors block"
               >
                 Anxiety
               </a>
